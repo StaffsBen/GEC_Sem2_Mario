@@ -32,4 +32,9 @@
   <ItemGroup>
     <None Include="SDL2\lib\x64\SDL2.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
