@@ -79,11 +79,11 @@ bool InitSDL() {
 			cout << "SDL_Image could not initialise. Error: " << IMG_GetError();
 			return false;
 		}
-		else {
+	}
+	else {
 
-			cout << "Renderer could not initialise. Error: " << SDL_GetError();
-			return false;
-		}
+		cout << "Renderer could not initialise. Error: " << SDL_GetError();
+		return false;
 	}
 
 	//load the background texture
