@@ -162,7 +162,7 @@ void Render() {
 	SDL_Rect _renderLocation = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	//render to screen
-	SDL_RenderCopyEx(g_renderer, g_texture, NULL, &_renderLocation, 0, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(g_renderer, g_texture, NULL, &_renderLocation, _imageAngle, NULL, SDL_FLIP_NONE);
 
 	//update the screen
 	SDL_RenderPresent(g_renderer);

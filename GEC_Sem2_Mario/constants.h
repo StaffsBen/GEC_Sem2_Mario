@@ -3,3 +3,6 @@
 //Screen dimensions
 #define SCREEN_WIDTH 512
 #define SCREEN_HEIGHT 416
+
+//vars
+int _imageAngle = 0;
