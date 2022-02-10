@@ -133,19 +133,27 @@ bool Update() {
 		return true;
 		break;
 
-	case SDL_KEYUP:
-
-		switch (e.key.keysym.sym) {
-
-		case SDLK_q:
-
-			return true;
-			break;
-		}
-
 	case SDL_MOUSEBUTTONDOWN:
 
 		return true;
+		break;
+	}
+
+	switch (e.key.keysym.sym) {
+	
+	case SDLK_q:
+
+		return true;
+		break;
+
+	case SDLK_d:
+
+		_imageAngle = (_imageAngle + 1);
+		break;
+
+	case SDLK_a:
+
+		_imageAngle = (_imageAngle - 1);
 		break;
 	}
 
