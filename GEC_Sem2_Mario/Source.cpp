@@ -64,7 +64,7 @@ bool InitSDL() {
 			return false;
 		}
 
-		return true;
+		//return true;
 	}
 
 	g_renderer = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_ACCELERATED);
@@ -87,12 +87,14 @@ bool InitSDL() {
 	}
 
 	//load the background texture
-	g_texture = LoadTextureFromFile("Images/test.bmp");
+	g_texture = LoadTextureFromFile("Images/meme.png");
 
 	if (g_texture == nullptr) {
 
 		return false;
 	}
+
+	return true;
 }
 
 void CloseSDL() {
