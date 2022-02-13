@@ -5,4 +5,4 @@
 #define SCREEN_HEIGHT 416
 
 //vars
-int _imageAngle = 0;
+double _imageAngle;
