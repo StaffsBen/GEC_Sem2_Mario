@@ -12,6 +12,7 @@ using namespace std;
 //Global vars
 SDL_Window* g_window = nullptr;
 SDL_Renderer* g_renderer = nullptr;
+//Texture2D* g_texture = nullptr;
 GameScreenManager* game_screen_manager;
 Uint32 g_old_time;
 
@@ -23,12 +24,12 @@ void Render();
 
 int main(int argc, char* args[]) {
 
-	game_screen_manager = new GameScreenManager(g_renderer, SCREEN_LEVEL1);
-
-	//set the time
-	g_old_time = SDL_GetTicks();
-	
 	if (InitSDL()) {
+
+		game_screen_manager = new GameScreenManager(g_renderer, SCREEN_LEVEL1);
+
+		//set the time
+		g_old_time = SDL_GetTicks();
 
 		//flag to check if we wish to quit
 		bool quit = false;
@@ -67,7 +68,7 @@ bool InitSDL() {
 		if (g_window == nullptr) {
 
 			//window failed
-			cout << "Window was not cerated. Error: " << SDL_GetError();
+			cout << "Window was not created. Error: " << SDL_GetError();
 			return false;
 		}
 
@@ -160,15 +161,15 @@ bool Update() {
 		return true;
 		break;
 
-	case SDLK_d:
+	/*case SDLK_d:
 
-		//_imageAngle = (_imageAngle + 1.0);
+		_imageAngle = (_imageAngle + 1.0);
 		break;
 
 	case SDLK_a:
 
-		//_imageAngle = (_imageAngle - 1.0);
-		break;
+		_imageAngle = (_imageAngle - 1.0);
+		break;*/
 	}
 
 	game_screen_manager->Update((float)(new_time - g_old_time) / 1000.0f, e);

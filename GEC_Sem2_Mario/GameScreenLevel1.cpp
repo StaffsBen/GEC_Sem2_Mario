@@ -1,11 +1,10 @@
-#include "GameScreenLevel1.h"
 #include <iostream>
 #include "Texture2D.h"
-#include "constants.h"
+#include "GameScreenLevel1.h"
 
 GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer) {
 
-	SetUpLevel();
+	SetUpLevel();	
 }
 
 GameScreenLevel1::~GameScreenLevel1() {
@@ -15,15 +14,15 @@ GameScreenLevel1::~GameScreenLevel1() {
 	m_background_texture = nullptr;
 }
 
+void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
+
+
+}
+
 void GameScreenLevel1::Render() {
 
 	//draw the background
 	m_background_texture->Render(Vector2D(), SDL_FLIP_NONE);
-}
-
-void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
-
-
 }
 
 bool GameScreenLevel1::SetUpLevel() {
@@ -33,8 +32,10 @@ bool GameScreenLevel1::SetUpLevel() {
 
 	if (!m_background_texture->LoadFromFile("Images/meme.png")) {
 
-		std::cout << "Failed to load background texture!" << std::endl;
+		std::cout << "Failed to load background texture! Error: " << SDL_GetError() << std::endl; /**/
 
 		return false;
 	}
+
+	return true;
 }
