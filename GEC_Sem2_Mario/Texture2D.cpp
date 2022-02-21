@@ -1,6 +1,7 @@
 #include "Texture2D.h"
 #include <SDL_image.h>
 #include <iostream>
+#include "constants.h"
 
 using namespace std;
 
@@ -34,7 +35,7 @@ bool Texture2D::LoadFromFile(std::string path) {
 
 		if (m_texture == nullptr) {
 
-			cout << "Unable to create texture from surface. Error: " << SDL_GetError();
+			cout << "Unable to create texture from surface. Error: " << SDL_GetError() << " "; /**/
 		}
 		else {
 
@@ -73,5 +74,5 @@ void Texture2D::Render(Vector2D _newPosition, SDL_RendererFlip _flip, double _an
 	SDL_Rect _renderLocation = { 0, 0, m_width, m_height };
 
 	//render to screen
-	SDL_RenderCopyEx(m_renderer, m_texture, nullptr, &_renderLocation, _angle, nullptr, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(m_renderer, m_texture, nullptr, &_renderLocation, 0, nullptr, SDL_FLIP_NONE);
 }

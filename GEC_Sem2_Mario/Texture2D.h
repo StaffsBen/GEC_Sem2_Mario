@@ -16,7 +16,7 @@ public:
 
 	bool LoadFromFile(std::string path);
 	void Free();
-	void Render(Vector2D _newPosition, SDL_RendererFlip _flip, double _angle);
+	void Render(Vector2D _newPosition, SDL_RendererFlip _flip, double _angle = 0.0);
 
 	int GetWidth() { return m_width; };
 	int GetHeight() { return m_height; };
