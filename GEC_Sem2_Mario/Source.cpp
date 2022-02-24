@@ -132,7 +132,7 @@ void CloseSDL() {
 bool Update() {
 
 	Uint32 new_time = SDL_GetTicks();
-	
+
 	//event handler
 	SDL_Event e;
 
@@ -155,21 +155,24 @@ bool Update() {
 	}
 
 	switch (e.key.keysym.sym) {
-	
+
 	case SDLK_q:
 
 		return true;
 		break;
 
-	/*case SDLK_d:
+		/*case SDLK_d:
 
-		_imageAngle = (_imageAngle + 1.0);
-		break;
+			_imageAngle = (_imageAngle + 1.0);
+			break;
 
-	case SDLK_a:
+		case SDLK_a:
 
-		_imageAngle = (_imageAngle - 1.0);
-		break;*/
+			_imageAngle = (_imageAngle - 1.0);
+			break;
+		}*/
+
+		
 	}
 
 	game_screen_manager->Update((float)(new_time - g_old_time) / 1000.0f, e);
