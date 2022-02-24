@@ -13,11 +13,9 @@ class Texture2D;
 class Character
 {
 
-private:
+protected:
 
 	FACING m_facing_direction;
-
-protected:
 
 	SDL_Renderer* m_renderer;
 	Vector2D m_position;
@@ -26,6 +24,7 @@ protected:
 	bool m_moving_left;
 	bool m_moving_right;
 
+	bool m_jump_command;
 	bool m_jumping;
 	bool m_can_jump;
 	float m_jump_force;
@@ -34,6 +33,7 @@ protected:
 	virtual void MoveRight(float deltaTime);
 
 	virtual void AddGravity(float deltaTime);
+	virtual void Jump();
 
 public:
 
