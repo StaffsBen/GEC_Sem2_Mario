@@ -3,8 +3,16 @@
 #define _CONSTANTS_H
 
 //Screen dimensions
-#define SCREEN_WIDTH 600 //512 //600
-#define SCREEN_HEIGHT 671 //416 //671
+#define SCREEN_WIDTH 512 //512 //600
+#define SCREEN_HEIGHT 412 //416 //671
+
+//LevelMap dimensions
+#define MAP_HEIGHT 13
+#define MAP_WIDTH 16
+
+//tile dimensions
+#define TILE_HEIGHT 32
+#define TILE_WIDTH 32
 
 //player movement speed
 #define MOVEMENTSPEED 100.0f

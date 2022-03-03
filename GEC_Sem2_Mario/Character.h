@@ -8,11 +8,15 @@
 #include "constants.h"
 #include <string>
 #include "Texture2D.h"
+#include "LevelMap.h"
 
 class Texture2D;
 
 class Character
 {
+private:
+
+	LevelMap* m_current_level_map;
 
 protected:
 
@@ -40,7 +44,7 @@ protected:
 
 public:
 
-	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position);
+	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, LevelMap* map);
 	~Character();
 
 	virtual void Render();
