@@ -1,7 +1,6 @@
 #include "Character.h"
-#include "Texture2D.h"
 
-Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position) {
+Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, LevelMap* map) {
 
 	m_renderer = renderer;
 	m_position = start_position;
@@ -15,6 +14,10 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 
 	m_moving_left = false;
 	m_moving_right = false;
+
+	m_current_level_map = map;
+
+	m_collision_radius = 15;
 }
 
 Character::~Character() {
@@ -103,7 +106,17 @@ void Character::Update(float deltaTime, SDL_Event e) {
 			m_jumping = false;
 	}
 
-	AddGravity(deltaTime);
+	//collision position variables
+	int centralX_position = (int)(m_position.x + (m_texture->GetWidth() * 0.5)) / TILE_WIDTH;
+	int foot_position = (int)(m_position.y + m_texture->GetHeight()) / TILE_HEIGHT;
+
+	//deal with gravity
+	if (m_current_level_map->GetTileAT(foot_position, centralX_position) == 0)
+		AddGravity(deltaTime);
+	else if (m_current_level_map->GetTileAT(foot_position, centralX_position) == 2)
+		m_current_level_map->ChangeTileAt(foot_position, centralX_position, 0);
+	else
+		m_can_jump = true; //collided with ground, can jump again
 }
 
 void Character::SetPosition(Vector2D new_position) {
@@ -146,4 +159,9 @@ void Character::Jump() {
 		m_jumping = true;
 		m_can_jump = false;
 	}
+}
+
+float Character::GetCollisionRadius() {
+
+	return m_collision_radius;
 }

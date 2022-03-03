@@ -20,6 +20,38 @@ struct Vector2D {
 	}
 };
 
+struct Rect2D {
+
+	float x;
+	float y;
+	float width;
+	float height;
+
+	Rect2D(float x_pos, float y_pos, float width, float height) {
+
+		x = x_pos;
+		y = y_pos;
+		this->width = width;
+		this->height = height;
+	}
+};
+
+struct Circle2D {
+
+	float x;
+	float y;
+	float radius1;
+	float radius2;
+
+	Circle2D(float x_pos, float y_pos, float radius1, float radius2) {
+
+		x = x_pos;
+		y = y_pos;
+		this->radius1 = radius1;
+		this->radius2 = radius2;
+	}
+};
+
 enum SCREENS {
 
 	SCREEN_INTRO,
