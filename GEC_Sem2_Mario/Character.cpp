@@ -113,8 +113,6 @@ void Character::Update(float deltaTime, SDL_Event e) {
 	//deal with gravity
 	if (m_current_level_map->GetTileAT(foot_position, centralX_position) == 0)
 		AddGravity(deltaTime);
-	else if (m_current_level_map->GetTileAT(foot_position, centralX_position) == 2)
-		m_current_level_map->ChangeTileAt(foot_position, centralX_position, 0);
 	else
 		m_can_jump = true; //collided with ground, can jump again
 }
