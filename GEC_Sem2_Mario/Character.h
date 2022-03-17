@@ -36,6 +36,8 @@ protected:
 
 	float m_collision_radius;
 
+	bool m_alive;
+
 	virtual void MoveLeft(float deltaTime);
 	virtual void MoveRight(float deltaTime);
 
@@ -59,6 +61,9 @@ public:
 
 	bool IsJumping() { return m_jumping; }
 	void CancelJump() { m_jumping = false; }
+
+	void SetAlive(bool isAlive);
+	bool GetAlive() { return m_alive; }
 };
 
 #endif _CHARACTER_H

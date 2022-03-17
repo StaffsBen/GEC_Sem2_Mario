@@ -24,6 +24,10 @@
 #define JUMP_FORCE_DECREMENT 400.0f
 #define INITIAL_JUMP_FORCE 600.0f
 
+//Koopa values
+#define INJURED_TIME 2.5f
+#define KOOPA_SPEED 96.0f
+
 //screen shake value
 #define SHAKE_DURATION 0.25f
 
