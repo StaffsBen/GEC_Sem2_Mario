@@ -25,6 +25,8 @@ public:
 	void Jump();
 
 	bool GetInjured() { return m_injured; }
+
+	void ChangeDirection();
 };
 
 #endif _CHARACTERKOOPA_H

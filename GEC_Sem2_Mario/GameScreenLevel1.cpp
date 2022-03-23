@@ -9,6 +9,8 @@ GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer
 	SetUpLevel();
 
 	m_level_map = nullptr;
+
+	_newKoopaTimer = NEW_KOOPA_TIMER;
 }
 
 GameScreenLevel1::~GameScreenLevel1() {
@@ -30,6 +32,8 @@ GameScreenLevel1::~GameScreenLevel1() {
 
 void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 
+	SetLevelMap();
+	
 	//does screen shake if required
 	if (m_screenshake) {
 
@@ -63,6 +67,23 @@ void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 	UpdatePowBlock();
 
 	UpdateEnemies(_deltaTime, e);
+
+	//Spawns new Koopa's after 5 secs
+	_newKoopaTimer = (_newKoopaTimer - _deltaTime);
+
+	if (_newKoopaTimer <= 0.0f) {
+
+		if (m_enemies.size() < MAX_KOOPA_NUM) {
+
+			std::cout << "Koopa spawn!\n";
+
+			//SetLevelMap();
+
+			CreateKoopa(Vector2D(256, 32), FACING_RIGHT, KOOPA_SPEED);
+
+			_newKoopaTimer = NEW_KOOPA_TIMER;
+		}
+	}
 }
 
 void GameScreenLevel1::Render() {
@@ -152,6 +173,19 @@ void GameScreenLevel1::UpdatePowBlock() {
 			}
 		}
 	}
+	else if (Collisions::Instance()->Box(_charLuigi->GetCollisionBox(), m_pow_block->GetCollisionBox())) {
+
+		if (m_pow_block->IsAvailable()) {
+
+			//collide while jumping
+			if (_charLuigi->IsJumping()) {
+
+				DoScreenShake();
+				m_pow_block->TakeHit();
+				_charLuigi->CancelJump();
+			}
+		}
+	}
 }
 
 void GameScreenLevel1::DoScreenShake() {
@@ -174,23 +208,38 @@ void GameScreenLevel1::UpdateEnemies(float _deltaTime, SDL_Event e) {
 		for (unsigned int i = 0; i < m_enemies.size(); i++)
 		{
 			//check if the enemy is on the bottom row of tiles
-			if (m_enemies[i]->GetPosition().y > 300.0f)
-			{
-				//is the enemy off screen to the left / right?
-				if (m_enemies[i]->GetPosition().x < (float)(-m_enemies[i]->GetCollisionBox().width * 0.5f) || m_enemies[
-					i]->GetPosition().x > SCREEN_WIDTH - (float)(m_enemies[i]->GetCollisionBox().width * 0.55f))
-					m_enemies[i]->SetAlive(false);
-			}
+			//if (m_enemies[i]->GetPosition().y > 300.0f)
+			//{
+			//	//is the enemy off screen to the left / right?
+			//	if (m_enemies[i]->GetPosition().x < (float)(-m_enemies[i]->GetCollisionBox().width * 0.5f) || m_enemies[
+			//		i]->GetPosition().x > SCREEN_WIDTH - (float)(m_enemies[i]->GetCollisionBox().width * 0.55f)) {
+
+			//		SetLevelMap();
+			//		
+			//		m_enemies[i]->SetAlive(false);
+
+			//		std::cout << "Off screen!\n";
+			//	}
+			//		
+			//}
 
 			//now do the update
 			m_enemies[i]->Update(_deltaTime, e);
+
+			//Collides with edges of screen and reverses movement
+			if (m_enemies[i]->GetPosition().x <= 1 || m_enemies[i]->GetPosition().x >= SCREEN_WIDTH - 31) {
+
+				//SetLevelMap();
+				
+				m_enemies[i]->ChangeDirection();
+			}
 
 			//check to see if enemy collides with player
 			if ((m_enemies[i]->GetPosition().y > 300.0f || m_enemies[i]->GetPosition().y <= 64.0f) && (m_enemies[i]->
 				GetPosition().x < 64.0f || m_enemies[i]->GetPosition().x > SCREEN_WIDTH - 96.0f)) { 
 
 				//ignore collisions if behind pipe
-				std::cout << "Behind Pipe!\n";
+				//std::cout << "Behind Pipe!\n";
 			}
 			else
 			{
@@ -199,10 +248,12 @@ void GameScreenLevel1::UpdateEnemies(float _deltaTime, SDL_Event e) {
 					if (m_enemies[i]->GetInjured())
 					{
 						m_enemies[i]->SetAlive(false);
+						std::cout << "Koopa dead!\n";
 					}
 					else
 					{
 						//kill mario
+						//_charMario->SetAlive(false);
 						std::cout << "Mario dead!\n";
 					}
 

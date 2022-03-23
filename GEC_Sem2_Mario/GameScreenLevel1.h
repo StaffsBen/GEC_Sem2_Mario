@@ -33,6 +33,7 @@ private:
 	void CreateKoopa(Vector2D position, FACING direction, float speed);
 	std::vector<CharacterKoopa*> m_enemies;
 	CharacterKoopa* _charKoopa;
+	float _newKoopaTimer;
 
 	//level funcs and var
 	bool SetUpLevel();

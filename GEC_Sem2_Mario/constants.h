@@ -27,6 +27,8 @@
 //Koopa values
 #define INJURED_TIME 2.5f
 #define KOOPA_SPEED 96.0f
+#define NEW_KOOPA_TIMER 5.5f
+#define MAX_KOOPA_NUM 5
 
 //screen shake value
 #define SHAKE_DURATION 0.25f
