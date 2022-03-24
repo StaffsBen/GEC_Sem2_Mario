@@ -27,6 +27,9 @@ GameScreenLevel1::~GameScreenLevel1() {
 	delete m_pow_block;
 	m_pow_block = nullptr;
 
+	delete _charCoin;
+	_charCoin = nullptr;
+
 	m_enemies.clear();
 }
 
@@ -68,8 +71,10 @@ void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 
 	UpdateEnemies(_deltaTime, e);
 
+	UpdateCoins(_deltaTime, e);
+
 	//Spawns new Koopa's after 5 secs
-	_newKoopaTimer = (_newKoopaTimer - _deltaTime);
+	/*_newKoopaTimer = (_newKoopaTimer - _deltaTime);
 
 	if (_newKoopaTimer <= 0.0f) {
 
@@ -77,13 +82,13 @@ void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 
 			std::cout << "Koopa spawn!\n";
 
-			//SetLevelMap();
+			SetLevelMap();
 
 			CreateKoopa(Vector2D(256, 32), FACING_RIGHT, KOOPA_SPEED);
 
 			_newKoopaTimer = NEW_KOOPA_TIMER;
 		}
-	}
+	}*/
 }
 
 void GameScreenLevel1::Render() {
@@ -91,6 +96,10 @@ void GameScreenLevel1::Render() {
 	//renders enemy chars
 	for (int i = 0; i < m_enemies.size(); i++)
 		m_enemies[i]->Render();
+
+	//renders coins
+	for (int i = 0; i < m_coins.size(); i++)
+		m_coins[i]->Render();
 	
 	//draw the background
 	m_background_texture->Render(Vector2D(0, m_background_yPos), SDL_FLIP_NONE);
@@ -117,13 +126,16 @@ bool GameScreenLevel1::SetUpLevel() {
 
 	SetLevelMap();
 
-	_charMario = new CharacterMario(m_renderer, "Images/Mario.png", Vector2D(64, 330), m_level_map);
+	_charMario = new CharacterMario(m_renderer, "Images/Mario2.png", Vector2D(64, 330), m_level_map);
 	_charLuigi = new CharacterLuigi(m_renderer, "Images/Luigi.png", Vector2D(164, 330), m_level_map);
 
 	m_pow_block = new PowBlock(m_renderer, m_level_map);
 
 	CreateKoopa(Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED);
 	CreateKoopa(Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED);
+
+	CreateCoin(Vector2D(235, 350));
+	CreateCoin(Vector2D(255, 350));
 
 	m_screenshake = false;
 	m_background_yPos = 0.0f;
@@ -227,7 +239,7 @@ void GameScreenLevel1::UpdateEnemies(float _deltaTime, SDL_Event e) {
 			m_enemies[i]->Update(_deltaTime, e);
 
 			//Collides with edges of screen and reverses movement
-			if (m_enemies[i]->GetPosition().x <= 1 || m_enemies[i]->GetPosition().x >= SCREEN_WIDTH - 31) {
+			if (m_enemies[i]->GetPosition().x <= 2 || m_enemies[i]->GetPosition().x >= SCREEN_WIDTH - 30) {
 
 				//SetLevelMap();
 				
@@ -243,20 +255,33 @@ void GameScreenLevel1::UpdateEnemies(float _deltaTime, SDL_Event e) {
 			}
 			else
 			{
-				if (Collisions::Instance()->Circle(m_enemies[i], _charMario))
-				{
-					if (m_enemies[i]->GetInjured())
-					{
+				if (Collisions::Instance()->Circle(m_enemies[i], _charMario)) {
+
+					if (m_enemies[i]->GetInjured()) {
+
 						m_enemies[i]->SetAlive(false);
 						std::cout << "Koopa dead!\n";
 					}
-					else
-					{
+					else {
+
 						//kill mario
 						//_charMario->SetAlive(false);
 						std::cout << "Mario dead!\n";
 					}
+				}
+				else if (Collisions::Instance()->Circle(m_enemies[i], _charLuigi)) {
 
+					if (m_enemies[i]->GetInjured()) {
+
+						m_enemies[i]->SetAlive(false);
+						std::cout << "Koopa dead!\n";
+					}
+					else {
+
+						//kill mario
+						//_charLuigi->SetAlive(false);
+						std::cout << "Luigi dead!\n";
+					}
 				}
 			}
 
@@ -281,4 +306,53 @@ void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction, float sp
 	_charKoopa = new CharacterKoopa(m_renderer, "Images/Koopa.png", position, direction, speed, m_level_map);
 
 	m_enemies.push_back(_charKoopa);
+}
+
+void GameScreenLevel1::CreateCoin(Vector2D position) {
+
+	_charCoin = new CharacterCoin(m_renderer, "Images/Coin.png", position, m_level_map);
+
+	m_coins.push_back(_charCoin);
+}
+
+void GameScreenLevel1::UpdateCoins(float _deltaTime, SDL_Event e) {
+
+	if (!m_coins.empty())
+	{
+		int coinIndexToDelete = -1;
+		for (unsigned int i = 0; i < m_coins.size(); i++)
+		{
+			//now do the update
+			m_coins[i]->Update(_deltaTime, e);
+
+			//check to see if enemy collides with player
+			if (Collisions::Instance()->Circle(m_coins[i], _charMario)) {
+
+				m_coins[i]->SetAlive(false);
+				std::cout << "Coin collected!\n";
+			}
+			else if (Collisions::Instance()->Circle(m_coins[i], _charLuigi)) {
+
+				m_coins[i]->SetAlive(false);
+				std::cout << "Coin collected!\n";
+			}
+
+			//if the enemy is no longer alive then schedule it for deletion
+			if (!m_coins[i]->GetAlive())
+			{
+				coinIndexToDelete = i;
+			}
+		}
+
+		//remove dead enemies -1 each update
+		if (coinIndexToDelete != -1)
+		{
+			m_coins.erase(m_coins.begin() + coinIndexToDelete);
+		}
+	}
+}
+
+void GameScreenLevel1::DisplayText() {
+
+	
 }

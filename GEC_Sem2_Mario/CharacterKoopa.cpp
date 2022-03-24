@@ -42,7 +42,6 @@ void CharacterKoopa::Render() {
 	{
 		m_texture->Render(_portion_of_sprite, _destRect, SDL_FLIP_HORIZONTAL);
 	}
-
 }
 
 void CharacterKoopa::Update(float deltaTime, SDL_Event e) {

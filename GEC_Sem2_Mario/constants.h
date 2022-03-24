@@ -30,6 +30,9 @@
 #define NEW_KOOPA_TIMER 5.5f
 #define MAX_KOOPA_NUM 5
 
+//Coin values
+#define ANIMATION_DELAY 0.1f
+
 //screen shake value
 #define SHAKE_DURATION 0.25f
 

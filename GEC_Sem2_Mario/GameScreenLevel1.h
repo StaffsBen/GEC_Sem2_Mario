@@ -8,6 +8,7 @@
 #include "CharacterMario.h"
 #include "CharacterLuigi.h"
 #include "CharacterKoopa.h"
+#include "CharacterCoin.h"
 #include "LevelMap.h"
 
 class Texture2D;
@@ -34,6 +35,16 @@ private:
 	std::vector<CharacterKoopa*> m_enemies;
 	CharacterKoopa* _charKoopa;
 	float _newKoopaTimer;
+
+	//coin vars and funcs
+	void CreateCoin(Vector2D position);
+	CharacterCoin* _charCoin;
+	std::vector<CharacterCoin*> m_coins;
+	void UpdateCoins(float _deltaTime, SDL_Event e);
+
+	//Score vars and funcs
+	int _playerScore;
+	void DisplayText();
 
 	//level funcs and var
 	bool SetUpLevel();
