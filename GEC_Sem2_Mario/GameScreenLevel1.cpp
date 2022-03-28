@@ -27,8 +27,7 @@ GameScreenLevel1::~GameScreenLevel1() {
 	delete m_pow_block;
 	m_pow_block = nullptr;
 
-	delete _charCoin;
-	_charCoin = nullptr;
+	m_coins.clear();
 
 	m_enemies.clear();
 }
@@ -126,8 +125,8 @@ bool GameScreenLevel1::SetUpLevel() {
 
 	SetLevelMap();
 
-	_charMario = new CharacterMario(m_renderer, "Images/Mario2.png", Vector2D(64, 330), m_level_map);
-	_charLuigi = new CharacterLuigi(m_renderer, "Images/Luigi.png", Vector2D(164, 330), m_level_map);
+	_charMario = new CharacterMario(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(64, 330), m_level_map); //"Images/SpriteSheetDoubledTransparent.png"
+	_charLuigi = new CharacterLuigi(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(164, 330), m_level_map);
 
 	m_pow_block = new PowBlock(m_renderer, m_level_map);
 
@@ -303,7 +302,7 @@ void GameScreenLevel1::UpdateEnemies(float _deltaTime, SDL_Event e) {
 
 void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction, float speed) {
 
-	_charKoopa = new CharacterKoopa(m_renderer, "Images/Koopa.png", position, direction, speed, m_level_map);
+	_charKoopa = new CharacterKoopa(m_renderer, "Images/SpriteSheetDoubledTransparent.png", position, direction, speed, m_level_map);
 
 	m_enemies.push_back(_charKoopa);
 }

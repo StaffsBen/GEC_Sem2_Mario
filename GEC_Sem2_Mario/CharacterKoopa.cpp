@@ -7,8 +7,8 @@ CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Ve
 	m_position = start_position;
 	m_injured = false;
 
-	m_single_sprite_w = m_texture->GetWidth() / 2;
-	m_single_sprite_h = m_texture->GetHeight();
+	m_single_sprite_w = m_texture->GetWidth() / KOOPA_SPRITE_DIV_WIDTH;
+	m_single_sprite_h = m_texture->GetHeight() / KOOPA_SPRITE_DIV_HEIGHT;
 }
 
 CharacterKoopa::~CharacterKoopa() {
@@ -28,10 +28,10 @@ void CharacterKoopa::Render() {
 
 	//get the portion of the sprite sheet you want to draw
 	//							   {xPos, yPos, width of sprite, height of sprite}
-	SDL_Rect _portion_of_sprite = { _left,0,m_single_sprite_w, m_single_sprite_h };
+	SDL_Rect _portion_of_sprite = { KOOPA_SPRITE_POS_X, KOOPA_SPRITE_POS_Y, m_single_sprite_w, m_single_sprite_h };
 
 	//determine where you want it drawn
-	SDL_Rect _destRect = { (int)(m_position.x), (int)(m_position.y), m_single_sprite_w, m_single_sprite_h };
+	SDL_Rect _destRect = { (int)(m_position.x), (int)(m_position.y + KOOPA_SPRITE_DRAW_ADJUST), m_single_sprite_w, m_single_sprite_h };
 
 	//then draw it facing the correct direction
 	if (m_facing_direction == FACING_RIGHT)
@@ -70,9 +70,7 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e) {
 
 		if (m_injured_time <= 0.0)
 			FlipRightWayUp();
-
 	}
-
 }
 
 void CharacterKoopa::TakeDamage() {

@@ -3,8 +3,8 @@
 
 CharacterMario::CharacterMario(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, LevelMap* map) : Character(renderer, imagePath, start_position, map) {
 
-	m_single_sprite_w = m_texture->GetWidth()/ 12;
-	m_single_sprite_h = m_texture->GetHeight();
+	m_single_sprite_w = m_texture->GetWidth() / MARIOLUIGI_SPRITE_DIV_WIDTH; //28 good
+	m_single_sprite_h = m_texture->GetHeight() / MARIOLUIGI_SPRITE_DIV_HEIGHT;  //32 good
 }
 
 CharacterMario::~CharacterMario() {
@@ -28,7 +28,7 @@ void CharacterMario::Render() {
 
 	//get the portion of the sprite sheet you want to draw
 	//							   {xPos, yPos, width of sprite, height of sprite}
-	SDL_Rect _portion_of_sprite = { (m_single_sprite_w * m_current_frame),0,m_single_sprite_w, m_single_sprite_h };
+	SDL_Rect _portion_of_sprite = { MARIO_SPRITE_POS_X, MARIO_SPRITE_POS_Y, m_single_sprite_w, m_single_sprite_h };
 
 	//determine where you want it drawn
 	SDL_Rect _destRect = { (int)(m_position.x), (int)(m_position.y), m_single_sprite_w, m_single_sprite_h };

@@ -29,12 +29,12 @@ Character::~Character() {
 
 void Character::Render() {
 
-	m_texture->Render(m_position, SDL_FLIP_NONE);
+	/*m_texture->Render(m_position, SDL_FLIP_NONE);
 
 	if (m_facing_direction == FACING_RIGHT)
 		m_texture->Render(m_position, SDL_FLIP_NONE);
 	else
-		m_texture->Render(m_position, SDL_FLIP_HORIZONTAL);
+		m_texture->Render(m_position, SDL_FLIP_HORIZONTAL);*/
 }
 
 void Character::Update(float deltaTime, SDL_Event e) {
@@ -59,11 +59,11 @@ void Character::Update(float deltaTime, SDL_Event e) {
 	}
 
 	//collision position variables
-	int centralX_position = (int)(m_position.x + (m_texture->GetWidth() * 0.5)) / TILE_WIDTH;
-	int foot_position = (int)(m_position.y + m_texture->GetHeight()) / TILE_HEIGHT;
+	int _centralX_position = (int)(m_position.x + (m_texture->GetWidth() / CENTRAL_X_POSITION_ADJUST)) / TILE_WIDTH; //* 0.5
+	int _foot_position = (int)(m_position.y + m_texture->GetHeight() / FOOT_POSITION_ADJUST) / TILE_HEIGHT;
 
 	//deal with gravity
-	if (m_current_level_map->GetTileAT(foot_position, centralX_position) == 0)
+	if (m_current_level_map->GetTileAT(_foot_position, _centralX_position) == 0)
 		AddGravity(deltaTime);
 	else
 		m_can_jump = true; //collided with ground, can jump again
