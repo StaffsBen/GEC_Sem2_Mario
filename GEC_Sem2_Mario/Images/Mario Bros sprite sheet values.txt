@@ -1,0 +1,8 @@
+Mario/Luigi individual sprite width - 32px
+Mario/Luigi individual sprite height - 42px
+
+Koopa individual sprite width - 32px
+Koopa individual sprite height - 32px
+
+POW Block individual sprite width - 32px
+POW Block individual sprite height - 32px

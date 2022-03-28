@@ -36,6 +36,8 @@ protected:
 
 	float m_collision_radius;
 
+	bool m_alive;
+
 	virtual void MoveLeft(float deltaTime);
 	virtual void MoveRight(float deltaTime);
 
@@ -55,10 +57,13 @@ public:
 	float GetCollisionRadius();
 	Circle2D GetCollisionRadiusAlt() { return Circle2D(m_position.x, m_position.y, m_texture->GetWidth(), m_texture->GetHeight()); }
 
-	Rect2D GetCollisionBox() { return Rect2D(m_position.x, m_position.y, m_texture->GetWidth(), m_texture->GetHeight()); }
+	Rect2D GetCollisionBox() { return Rect2D(m_position.x, m_position.y, m_texture->GetWidth() / COLLISIONBOX_WIDTH_ADJUST, m_texture->GetHeight() / COLLISIONBOX_HEIGHT_ADJUST); } //return Rect2D(m_position.x, m_position.y, m_texture->GetWidth() / 28, m_texture->GetHeight() / 32);
 
 	bool IsJumping() { return m_jumping; }
 	void CancelJump() { m_jumping = false; }
+
+	void SetAlive(bool isAlive);
+	bool GetAlive() { return m_alive; }
 };
 
 #endif _CHARACTER_H

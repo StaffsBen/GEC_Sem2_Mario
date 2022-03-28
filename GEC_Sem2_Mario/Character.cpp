@@ -18,6 +18,8 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	m_current_level_map = map;
 
 	m_collision_radius = 15;
+
+	m_alive = true;
 }
 
 Character::~Character() {
@@ -27,12 +29,12 @@ Character::~Character() {
 
 void Character::Render() {
 
-	m_texture->Render(m_position, SDL_FLIP_NONE);
+	/*m_texture->Render(m_position, SDL_FLIP_NONE);
 
 	if (m_facing_direction == FACING_RIGHT)
 		m_texture->Render(m_position, SDL_FLIP_NONE);
 	else
-		m_texture->Render(m_position, SDL_FLIP_HORIZONTAL);
+		m_texture->Render(m_position, SDL_FLIP_HORIZONTAL);*/
 }
 
 void Character::Update(float deltaTime, SDL_Event e) {
@@ -41,56 +43,6 @@ void Character::Update(float deltaTime, SDL_Event e) {
 		MoveLeft(deltaTime);
 	else if (m_moving_right)
 		MoveRight(deltaTime);
-
-	//switch (e.type) {
-
-	//case SDL_KEYDOWN:
-
-	//	switch (e.key.keysym.sym) {
-
-	//	case SDLK_a:
-
-	//		m_moving_left = true;
-	//		break;
-
-	//	case SDLK_d:
-
-	//		m_moving_right = true;
-	//		break;
-	//	
-	//	case SDLK_SPACE:
-
-	//		//m_jump_command = true;
-	//		if (m_can_jump)
-	//			Jump();
-
-	//		break;
-	//	}
-
-	//	break;
-
-	//case SDL_KEYUP:
-
-	//	switch (e.key.keysym.sym) {
-
-	//	case SDLK_a:
-
-	//		m_moving_left = false;
-	//		break;
-
-	//	case SDLK_d:
-
-	//		m_moving_right = false;
-	//		break;
-
-	//	case SDLK_SPACE:
-
-	//		m_jump_command = false;
-	//		break;
-	//	}
-
-	//	break;
-	//}
 
 	//deals with jumping first
 	if (m_jumping) {
@@ -107,11 +59,11 @@ void Character::Update(float deltaTime, SDL_Event e) {
 	}
 
 	//collision position variables
-	int centralX_position = (int)(m_position.x + (m_texture->GetWidth() * 0.5)) / TILE_WIDTH;
-	int foot_position = (int)(m_position.y + m_texture->GetHeight()) / TILE_HEIGHT;
+	int _centralX_position = (int)(m_position.x + (m_texture->GetWidth() / CENTRAL_X_POSITION_ADJUST)) / TILE_WIDTH; //* 0.5
+	int _foot_position = (int)(m_position.y + m_texture->GetHeight() / FOOT_POSITION_ADJUST) / TILE_HEIGHT;
 
 	//deal with gravity
-	if (m_current_level_map->GetTileAT(foot_position, centralX_position) == 0)
+	if (m_current_level_map->GetTileAT(_foot_position, _centralX_position) == 0)
 		AddGravity(deltaTime);
 	else
 		m_can_jump = true; //collided with ground, can jump again
@@ -162,4 +114,9 @@ void Character::Jump() {
 float Character::GetCollisionRadius() {
 
 	return m_collision_radius;
+}
+
+void Character::SetAlive(bool isAlive) {
+
+	m_alive = isAlive;
 }

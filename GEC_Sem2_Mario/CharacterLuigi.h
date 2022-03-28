@@ -18,6 +18,10 @@ public:
 	virtual void Update(float deltaTime, SDL_Event e);
 	void SetPosition(Vector2D new_position);
 	Vector2D GetPosition();
+
+	float m_single_sprite_w, m_single_sprite_h, m_frame_delay;
+
+	int m_current_frame;
 };
 
 #endif _CHARACTERLUIGI_H

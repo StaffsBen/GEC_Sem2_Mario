@@ -7,6 +7,8 @@
 #include "Character.h"
 #include "CharacterMario.h"
 #include "CharacterLuigi.h"
+#include "CharacterKoopa.h"
+#include "CharacterCoin.h"
 #include "LevelMap.h"
 
 class Texture2D;
@@ -23,12 +25,28 @@ private:
 	//background var
 	Texture2D* m_background_texture;
 
-	//character vars
-	Character* my_character;
+	//player character vars
 	CharacterMario* _charMario;
 	CharacterLuigi* _charLuigi;
 
-	//level vars
+	//enemy character vars and funcs
+	void UpdateEnemies(float _deltaTime, SDL_Event e);
+	void CreateKoopa(Vector2D position, FACING direction, float speed);
+	std::vector<CharacterKoopa*> m_enemies;
+	CharacterKoopa* _charKoopa;
+	float _newKoopaTimer;
+
+	//coin vars and funcs
+	void CreateCoin(Vector2D position);
+	CharacterCoin* _charCoin;
+	std::vector<CharacterCoin*> m_coins;
+	void UpdateCoins(float _deltaTime, SDL_Event e);
+
+	//Score vars and funcs
+	int _playerScore;
+	void DisplayText();
+
+	//level funcs and var
 	bool SetUpLevel();
 	void SetLevelMap();
 	LevelMap* m_level_map;
@@ -38,6 +56,7 @@ private:
 	bool m_screenshake;
 	float m_shake_time, m_wobble, m_background_yPos;
 
+	//screen shake func
 	void DoScreenShake();
 
 public:
