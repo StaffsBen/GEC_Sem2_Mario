@@ -19,9 +19,11 @@ public:
 	void SetPosition(Vector2D new_position);
 	Vector2D GetPosition();
 
-	float m_single_sprite_w, m_single_sprite_h, m_frame_delay;
+	float m_single_sprite_w, m_single_sprite_h, _frameDelay;
 
-	int m_current_frame;
+	int m_current_frame, _spriteXPosAdjust;
+
+	bool _frameChange;
 };
 
 #endif _CHARACTERLUIGI_H

@@ -18,17 +18,17 @@ CharacterKoopa::~CharacterKoopa() {
 
 void CharacterKoopa::Render() {
 
-	//variable to hold the left position of the sprite we want to draw
-	int _left = 0.0f;
+	//variable to hold the amount in which the X position of the sprite will be adjusted by
+	int _spriteXPosAdjust = 0;
 
-	//if injured move the left position to be the left position of the second image of the sprite sheet
+	//if injured move the X position to the right, to where the first injured sprite is
 	if (m_injured)
-		_left = m_single_sprite_w;
+		_spriteXPosAdjust = KOOPA_INJURED_SPRITE_POS_ADJUST;
 
 
 	//get the portion of the sprite sheet you want to draw
 	//							   {xPos, yPos, width of sprite, height of sprite}
-	SDL_Rect _portion_of_sprite = { KOOPA_SPRITE_POS_X, KOOPA_SPRITE_POS_Y, m_single_sprite_w, m_single_sprite_h };
+	SDL_Rect _portion_of_sprite = { (KOOPA_SPRITE_POS_X + _spriteXPosAdjust), KOOPA_SPRITE_POS_Y, m_single_sprite_w, m_single_sprite_h };
 
 	//determine where you want it drawn
 	SDL_Rect _destRect = { (int)(m_position.x), (int)(m_position.y + KOOPA_SPRITE_DRAW_ADJUST), m_single_sprite_w, m_single_sprite_h };

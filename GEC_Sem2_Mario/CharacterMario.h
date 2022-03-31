@@ -21,11 +21,11 @@ public:
 
 private:
 
-	float m_single_sprite_w, m_single_sprite_h;
+	float m_single_sprite_w, m_single_sprite_h, _frameDelay;
 
-	float m_frame_delay;
+	int m_current_frame, _spriteXPosAdjust;
 
-	int m_current_frame;
+	bool _frameChange;
 };
 
 #endif _CHARACTERMARIO_H

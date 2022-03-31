@@ -8,8 +8,11 @@ class CharacterKoopa : public Character
 {
 private:
 
-	float m_single_sprite_w, m_single_sprite_h, m_injured_time, m_movement_speed;
-	bool m_injured;
+	float m_single_sprite_w, m_single_sprite_h, m_injured_time, m_movement_speed, _frameDelay;
+
+	int m_current_frame, _spriteXPosAdjust;
+
+	bool m_injured, _frameChange;
 
 	void FlipRightWayUp();
 
