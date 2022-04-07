@@ -32,7 +32,7 @@ void CharacterKoopa::Render() {
 
 	if (_frameChange) {
 
-		_spriteXPosAdjust += 48; //adds 32 to drawn sprite position, changing which sprite is drawn
+		_spriteXPosAdjust += 32; //adds 32 to drawn sprite position, changing which sprite is drawn
 		_frameDelay = ANIMATION_DELAY; //resets the frame delay
 		_frameChange = false; //makes it so the frame cannot change until the delay reaches 0 again
 	}
@@ -87,13 +87,13 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e) {
 			FlipRightWayUp();
 	}
 
-	//if the sprite drawn position is larger than 96, or 210, the sprite is reset back to the idle sprite
-	if (_spriteXPosAdjust > 220)
+	//if the sprite drawn position is larger than 128, the sprite is reset back to the idle sprite
+	if (_spriteXPosAdjust > 128)
 		_spriteXPosAdjust = 0;
 
 	//if the charater is jumping, the drawn sprite position has 180 added, moving to the jumping sprite
 	if (m_jumping)
-		_spriteXPosAdjust = 0;
+		_spriteXPosAdjust = 449;
 
 	//frame delay countdown
 	_frameDelay -= deltaTime;

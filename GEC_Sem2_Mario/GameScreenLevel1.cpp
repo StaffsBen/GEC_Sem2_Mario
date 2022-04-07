@@ -148,8 +148,8 @@ void GameScreenLevel1::SetLevelMap() {
 
 	std::cout << "Levelmap made" << std::endl;
 
-	int map[MAP_HEIGHT][MAP_WIDTH] = { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	/*int map[MAP_HEIGHT][MAP_WIDTH] = { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },			original levelmap
 									   { 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1 },
 									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
@@ -158,6 +158,21 @@ void GameScreenLevel1::SetLevelMap() {
 									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 									   { 0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0 },
 									   { 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1 },
+									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+									   { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 }
+	};*/
+
+	int map[MAP_HEIGHT][MAP_WIDTH] = { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },		//modified levelmap, left platforms extended to match background
+									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+									   { 1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1 },
+									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+									   { 0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0 },
+									   { 1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1 },
+									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+									   { 0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0 },
+									   { 1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1 },
 									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 									   { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 }
@@ -308,7 +323,7 @@ void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction, float sp
 
 	std::cout << "Levelmap " << (m_level_map == nullptr) << std::endl;
 
-	_charKoopa = new CharacterKoopa(m_renderer, "Images/SpriteSheetDoubledTransparent.png", position, direction, speed, m_level_map);
+	_charKoopa = new CharacterKoopa(m_renderer, "Images/SpriteSheetDoubledTransparentSpacingFixWIPbackup.png", position, direction, speed, m_level_map);
 
 	m_enemies.push_back(_charKoopa);
 }
