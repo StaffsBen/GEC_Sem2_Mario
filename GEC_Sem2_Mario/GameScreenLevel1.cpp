@@ -8,12 +8,14 @@ GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer
 
 	SetUpLevel();
 
-	m_level_map = nullptr;
+	//m_level_map = nullptr; //idk i did this, im the stupid
 
 	_newKoopaTimer = NEW_KOOPA_TIMER;
 }
 
 GameScreenLevel1::~GameScreenLevel1() {
+
+	//std::cout << "GameScreenLevel1 deconstuct\n";
 
 	delete m_background_texture;
 	m_background_texture = nullptr;
@@ -34,7 +36,7 @@ GameScreenLevel1::~GameScreenLevel1() {
 
 void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 
-	SetLevelMap();
+	//SetLevelMap();
 	
 	//does screen shake if required
 	if (m_screenshake) {
@@ -73,7 +75,7 @@ void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 	UpdateCoins(_deltaTime, e);
 
 	//Spawns new Koopa's after 5 secs
-	/*_newKoopaTimer = (_newKoopaTimer - _deltaTime);
+	_newKoopaTimer = (_newKoopaTimer - _deltaTime);
 
 	if (_newKoopaTimer <= 0.0f) {
 
@@ -81,13 +83,13 @@ void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 
 			std::cout << "Koopa spawn!\n";
 
-			SetLevelMap();
+			//SetLevelMap();
 
 			CreateKoopa(Vector2D(256, 32), FACING_RIGHT, KOOPA_SPEED);
 
 			_newKoopaTimer = NEW_KOOPA_TIMER;
 		}
-	}*/
+	}
 }
 
 void GameScreenLevel1::Render() {
@@ -143,6 +145,8 @@ bool GameScreenLevel1::SetUpLevel() {
 }
 
 void GameScreenLevel1::SetLevelMap() {
+
+	std::cout << "Levelmap made" << std::endl;
 
 	int map[MAP_HEIGHT][MAP_WIDTH] = { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
@@ -277,7 +281,7 @@ void GameScreenLevel1::UpdateEnemies(float _deltaTime, SDL_Event e) {
 					}
 					else {
 
-						//kill mario
+						//kill luigi
 						//_charLuigi->SetAlive(false);
 						std::cout << "Luigi dead!\n";
 					}
@@ -301,6 +305,8 @@ void GameScreenLevel1::UpdateEnemies(float _deltaTime, SDL_Event e) {
 }
 
 void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction, float speed) {
+
+	std::cout << "Levelmap " << (m_level_map == nullptr) << std::endl;
 
 	_charKoopa = new CharacterKoopa(m_renderer, "Images/SpriteSheetDoubledTransparent.png", position, direction, speed, m_level_map);
 

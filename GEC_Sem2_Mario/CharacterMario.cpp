@@ -135,6 +135,8 @@ void CharacterMario::Update(float deltaTime, SDL_Event e) {
 	//if the frame delay value is equal to or less than 0, the frame is then allowed to change
 	if (_frameDelay <= 0.0f) {
 
+		//std::cout << "mario frame change!\n";
+
 		_frameChange = true;
 	}
 }

@@ -1,4 +1,5 @@
 #include "LevelMap.h"
+#include <iostream>
 
 /*
 	when making a map, remember:
@@ -26,6 +27,8 @@ LevelMap::LevelMap(int map[MAP_HEIGHT][MAP_WIDTH]) {
 }
 
 LevelMap::~LevelMap() {
+
+	std::cout << "Levelmap deleted" << std::endl;
 
 	//deletes all elements of the array
 	for (unsigned int i = 0; i < MAP_HEIGHT; i++) {

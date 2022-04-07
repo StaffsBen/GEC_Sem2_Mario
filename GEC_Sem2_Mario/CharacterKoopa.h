@@ -4,6 +4,8 @@
 
 #include "Character.h"
 
+class LevelMap;
+
 class CharacterKoopa : public Character
 {
 private:
@@ -15,6 +17,8 @@ private:
 	bool m_injured, _frameChange;
 
 	void FlipRightWayUp();
+
+	LevelMap* m_map;
 
 public:
 
