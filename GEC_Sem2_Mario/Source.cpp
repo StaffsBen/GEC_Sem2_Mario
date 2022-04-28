@@ -35,10 +35,10 @@ int main(int argc, char* args[]) {
 		g_old_time = SDL_GetTicks();
 
 		//loads and loops music
-		LoadMusic("Audio/Mario.mp3");
+		/*LoadMusic("Audio/Mario.mp3");
 
 		if (Mix_PlayingMusic() == 0)
-			Mix_PlayMusic(g_music, -1);
+			Mix_PlayMusic(g_music, -1);*/
 
 		//flag to check if we wish to quit
 		bool quit = false;
@@ -112,10 +112,11 @@ bool InitSDL() {
 	}*/
 
 	//Initialse the audio mixer
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+	/*if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+
 		cout << "Mixer could not init, Error: " << Mix_GetError() << endl;
 		return false;
-	}
+	}*/
 
 	return true;
 }
@@ -143,8 +144,8 @@ void CloseSDL() {
 	game_screen_manager = nullptr;
 
 	//clears music
-	Mix_FreeMusic(g_music);
-	g_music == nullptr;
+	/*Mix_FreeMusic(g_music);
+	g_music == nullptr;*/
 }
 
 bool Update() {
