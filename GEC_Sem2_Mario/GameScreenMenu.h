@@ -5,7 +5,7 @@
 #include "GameScreen.h"
 #include "Commons.h"
 #include "Texture2D.h"
-
+#include "MusicPlayer.h"
 
 class Texture2D;
 
@@ -19,8 +19,11 @@ private:
 
 	//level funcs and var
 	bool SetUpLevel();
-
 	float m_background_yPos;
+	void SetUpMusic();
+
+	//music var
+	MusicPlayer* m_musicplayer;
 
 public:
 

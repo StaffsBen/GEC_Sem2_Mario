@@ -10,6 +10,7 @@
 #include "CharacterKoopa.h"
 #include "CharacterCoin.h"
 #include "LevelMap.h"
+#include "MusicPlayer.h"
 
 class Texture2D;
 
@@ -49,6 +50,7 @@ private:
 	//level funcs and var
 	bool SetUpLevel();
 	void SetLevelMap();
+	void SetUpMusic();
 	LevelMap* m_level_map;
 
 	//powblock vars
@@ -58,6 +60,9 @@ private:
 
 	//screen shake func
 	void DoScreenShake();
+
+	//music player vars
+	MusicPlayer* m_musicplayer;
 
 public:
 

@@ -38,6 +38,8 @@ void MusicPlayer::PlayMusic(std::string filepath) {
 	//loads and loops music
 	LoadMusic(filepath);
 
+	std::cout << "Music loaded!\n";
+
 	if (Mix_PlayingMusic() == 0)
 		Mix_PlayMusic(m_music, -1);
 }
@@ -48,4 +50,6 @@ void MusicPlayer::StopMusic() {
 
 	Mix_FreeMusic(m_music);
 	m_music == nullptr;
+
+	std::cout << "Music unloaded!\n";
 }

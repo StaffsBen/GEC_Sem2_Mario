@@ -8,12 +8,17 @@
 GameScreenMenu::GameScreenMenu(SDL_Renderer* renderer) : GameScreen(renderer) {
 
 	SetUpLevel();
+
+	SetUpMusic();
 }
 
 GameScreenMenu::~GameScreenMenu() {
 
 	delete m_background_texture;
 	m_background_texture = nullptr;
+
+	delete m_musicplayer;
+	m_musicplayer = nullptr;
 }
 
 void GameScreenMenu::Update(float _deltaTime, SDL_Event e) {
@@ -42,4 +47,11 @@ bool GameScreenMenu::SetUpLevel() {
 	m_background_yPos = 0.0f;
 
 	return true;
+}
+
+void GameScreenMenu::SetUpMusic() {
+
+	m_musicplayer = new MusicPlayer();
+	m_musicplayer->StopMusic();
+	m_musicplayer->PlayMusic("Audio/MarioUnderworld.mp3");
 }
