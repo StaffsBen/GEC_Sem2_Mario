@@ -30,6 +30,9 @@ void GameScreenMenu::Render() {
 
 	//draw the background
 	m_background_texture->Render(Vector2D(0, m_background_yPos), SDL_FLIP_NONE);
+
+	for (int i = 0; i < m_textChars.size(); i++)
+		m_textChars[i]->Render();
 }
 
 bool GameScreenMenu::SetUpLevel() {
@@ -37,16 +40,29 @@ bool GameScreenMenu::SetUpLevel() {
 	//load texture
 	m_background_texture = new Texture2D(m_renderer);
 
-	if (!m_background_texture->LoadFromFile("Images/MenuPlaceholder1.png")) {
+	/*if (!m_background_texture->LoadFromFile("Images/MenuPlaceholder1.png")) {
 
 		std::cout << "Failed to load background texture! Error: " << SDL_GetError() << std::endl;
 
 		return false;
-	}
+	}*/
 
 	m_background_yPos = 0.0f;
 
+	CreateText(Vector2D(50, 50), '0');
+	CreateText(Vector2D(70, 50), '1');
+	CreateText(Vector2D(90, 50), '6');
+	CreateText(Vector2D(50, 100), 'f');
+
 	return true;
+}
+
+void GameScreenMenu::CreateText(Vector2D position, char symbol) {
+
+	//Creates text character and pushes to text char vector
+	_charText = new CharacterText(m_renderer, "Images/SpriteSheetDoubledTransparent.png", position, nullptr, symbol);
+
+	m_textChars.push_back(_charText);
 }
 
 void GameScreenMenu::SetUpMusic() {

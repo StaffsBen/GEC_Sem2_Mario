@@ -132,8 +132,8 @@ bool GameScreenLevel1::SetUpLevel() {
 
 	SetLevelMap();
 
-	_charMario = new CharacterMario(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(64, 330), m_level_map); //"Images/SpriteSheetDoubledTransparent.png"
-	_charLuigi = new CharacterLuigi(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(164, 330), m_level_map);
+	_charMario = new CharacterMario(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(64, 315), m_level_map); //"Images/SpriteSheetDoubledTransparent.png"
+	_charLuigi = new CharacterLuigi(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(164, 315), m_level_map);
 
 	m_pow_block = new PowBlock(m_renderer, m_level_map);
 

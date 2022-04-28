@@ -4,10 +4,14 @@
 
 #include "GameScreen.h"
 #include "Commons.h"
+#include <vector>
 #include "Texture2D.h"
 #include "MusicPlayer.h"
+#include "CharacterText.h"
 
 class Texture2D;
+
+class Character;
 
 class GameScreenMenu : GameScreen
 {
@@ -22,6 +26,11 @@ private:
 	float m_background_yPos;
 	void SetUpMusic();
 
+	//char vars
+	void CreateText(Vector2D position, char symbol);
+	CharacterText* _charText;
+	std::vector <CharacterText*> m_textChars;
+
 	//music var
 	MusicPlayer* m_musicplayer;
 
@@ -33,7 +42,7 @@ public:
 	void Render() override;
 	void Update(float _deltaTime, SDL_Event e) override;
 
-	void UpdatePowBlock();
+	
 };
 
 #endif _GAMESCREENMENU_H
