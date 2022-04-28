@@ -8,6 +8,8 @@ GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer
 
 	SetUpLevel();
 
+	SetUpMusic();
+
 	//m_level_map = nullptr; //idk i did this, im the stupid
 
 	_newKoopaTimer = NEW_KOOPA_TIMER;
@@ -19,6 +21,9 @@ GameScreenLevel1::~GameScreenLevel1() {
 
 	delete m_background_texture;
 	m_background_texture = nullptr;
+
+	delete m_musicplayer;
+	m_musicplayer = nullptr;
 
 	delete _charMario;
 	_charMario = nullptr;
@@ -186,6 +191,13 @@ void GameScreenLevel1::SetLevelMap() {
 
 	//set the new one
 	m_level_map = new LevelMap(map);
+}
+
+void GameScreenLevel1::SetUpMusic() {
+
+	m_musicplayer = new MusicPlayer();
+	m_musicplayer->StopMusic();
+	m_musicplayer->PlayMusic("Audio/Mario.mp3");
 }
 
 void GameScreenLevel1::UpdatePowBlock() {
