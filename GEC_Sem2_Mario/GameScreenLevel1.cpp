@@ -321,7 +321,7 @@ void GameScreenLevel1::UpdateEnemies(float _deltaTime, SDL_Event e) {
 
 void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction, float speed) {
 
-	std::cout << "Levelmap " << (m_level_map == nullptr) << std::endl;
+	//std::cout << "Levelmap " << (m_level_map == nullptr) << std::endl;
 
 	_charKoopa = new CharacterKoopa(m_renderer, "Images/SpriteSheetDoubledTransparentSpacingFixWIPbackup.png", position, direction, speed, m_level_map);
 
