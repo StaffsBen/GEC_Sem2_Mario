@@ -26,7 +26,7 @@ int main(int argc, char* args[]) {
 
 	if (InitSDL()) {
 
-		game_screen_manager = new GameScreenManager(g_renderer, SCREEN_LEVEL1);
+		game_screen_manager = new GameScreenManager(g_renderer, SCREEN_MENU);
 
 		//set the time
 		g_old_time = SDL_GetTicks();
@@ -161,18 +161,15 @@ bool Update() {
 		return true;
 		break;
 
-		/*case SDLK_d:
+	case SDLK_1:
 
-			_imageAngle = (_imageAngle + 1.0);
-			break;
+		game_screen_manager->ChangeScreen(SCREEN_MENU);
+		break;
 
-		case SDLK_a:
+	case SDLK_2:
 
-			_imageAngle = (_imageAngle - 1.0);
-			break;
-		}*/
-
-		
+		game_screen_manager->ChangeScreen(SCREEN_LEVEL1);
+		break;
 	}
 
 	game_screen_manager->Update((float)(new_time - g_old_time) / 1000.0f, e);
