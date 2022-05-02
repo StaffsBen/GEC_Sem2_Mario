@@ -34,6 +34,9 @@ private:
 	//music var
 	MusicPlayer* m_musicplayer;
 
+	int _tempscore, _ts2; //temp, for testing, will remove
+	char _tempchar, _tc2; //^
+
 public:
 
 	GameScreenMenu(SDL_Renderer* renderer);

@@ -17,13 +17,61 @@ GameScreenMenu::~GameScreenMenu() {
 	delete m_background_texture;
 	m_background_texture = nullptr;
 
+	for (int i = 0; i < m_textChars.size(); i++) {
+
+		delete m_textChars[i];
+	}
+
 	delete m_musicplayer;
 	m_musicplayer = nullptr;
 }
 
 void GameScreenMenu::Update(float _deltaTime, SDL_Event e) {
 
+	//system for player scoring system (pretty much just visual), could move to its own function
 	
+	//converts score vals to char vals for text characters
+	_tempchar = '0' + _tempscore;
+	_tc2 = '0' + _ts2;
+	
+	//changes 11th and 12th text chars to match current respective score vals
+	m_textChars[10]->SymbolSelect(_tc2);
+	m_textChars[11]->SymbolSelect(_tempchar);
+
+	//if digit reaches 10, tenth is increased by one and digit is reset to 0. eg 09 -> 10, 19 -> 20
+	if (_tempscore == 10) {
+
+		//m_textChars[10]->SymbolSelect('0');
+		_tempscore = 0;
+		_ts2++;
+	}
+
+	//should keep whole score at 99 when 9 is reached for both, but doesnt rn
+	if (_ts2 >= 9) {
+
+		_ts2 = 9;
+
+		if (_tempscore >= 9) {
+
+			_ts2 = 9;
+			_tempscore = 9;
+		}
+	}
+
+	switch (e.type) {
+
+	case SDL_KEYDOWN:
+
+		switch (e.key.keysym.sym) {
+
+		case SDLK_o:
+
+			_tempscore++;
+			break;
+		}
+	}
+
+	std::cout << "Score: " << _tempscore << std::endl;
 }
 
 void GameScreenMenu::Render() {
@@ -49,16 +97,24 @@ bool GameScreenMenu::SetUpLevel() {
 
 	m_background_yPos = 0.0f;
 
-	CreateText(Vector2D(50, 50), '0');
-	CreateText(Vector2D(70, 50), '1');
-	CreateText(Vector2D(90, 50), '2');
-	CreateText(Vector2D(110, 50), '3');
-	CreateText(Vector2D(130, 50), '4');
-	CreateText(Vector2D(150, 50), '5');
-	CreateText(Vector2D(170, 50), '6');
-	CreateText(Vector2D(190, 50), '7');
-	CreateText(Vector2D(210, 50), '8');
-	CreateText(Vector2D(230, 50), '9');
+	CreateText(Vector2D(50, 50), 's');
+	CreateText(Vector2D(65, 50), 'c');
+	CreateText(Vector2D(80, 50), 'o');
+	CreateText(Vector2D(100, 50), 'r');
+	CreateText(Vector2D(115, 50), 'e');
+
+	CreateText(Vector2D(50, 100), 's');
+	CreateText(Vector2D(65, 100), 'c');
+	CreateText(Vector2D(80, 100), 'o');
+	CreateText(Vector2D(100, 100), 'r');
+	CreateText(Vector2D(115, 100), 'e');
+
+	_tempscore = 0;
+	_ts2 = 0;
+	
+	CreateText(Vector2D(130, 50), _tc2);
+	CreateText(Vector2D(150, 50), _tempchar);
+	CreateText(Vector2D(130, 100), _tempchar);
 
 	return true;
 }
