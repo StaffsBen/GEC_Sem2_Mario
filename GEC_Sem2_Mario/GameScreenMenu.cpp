@@ -51,8 +51,14 @@ bool GameScreenMenu::SetUpLevel() {
 
 	CreateText(Vector2D(50, 50), '0');
 	CreateText(Vector2D(70, 50), '1');
-	CreateText(Vector2D(90, 50), '6');
-	CreateText(Vector2D(50, 100), 'f');
+	CreateText(Vector2D(90, 50), '2');
+	CreateText(Vector2D(110, 50), '3');
+	CreateText(Vector2D(130, 50), '4');
+	CreateText(Vector2D(150, 50), '5');
+	CreateText(Vector2D(170, 50), '6');
+	CreateText(Vector2D(190, 50), '7');
+	CreateText(Vector2D(210, 50), '8');
+	CreateText(Vector2D(230, 50), '9');
 
 	return true;
 }
@@ -60,7 +66,7 @@ bool GameScreenMenu::SetUpLevel() {
 void GameScreenMenu::CreateText(Vector2D position, char symbol) {
 
 	//Creates text character and pushes to text char vector
-	_charText = new CharacterText(m_renderer, "Images/SpriteSheetDoubledTransparent.png", position, nullptr, symbol);
+	_charText = new CharacterText(m_renderer, "Images/SpriteSheetDoubledTransparentSpacingFixWIPv3.png", position, nullptr, symbol);
 
 	m_textChars.push_back(_charText);
 }

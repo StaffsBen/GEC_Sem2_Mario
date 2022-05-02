@@ -3,12 +3,12 @@
 
 CharacterText::CharacterText(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, LevelMap* map, char symbol) : Character(renderer, imagePath, start_position, map) {
 
-	m_single_sprite_w = m_texture->GetWidth() / TEXT_SPRITE_DIV_WIDTH; //28 good
-	m_single_sprite_h = m_texture->GetHeight() / TEXT_SPRITE_DIV_HEIGHT;  //32 good
+	m_single_sprite_w = m_texture->GetWidth() / TEXT_SPRITE_DIV_WIDTH;
+	m_single_sprite_h = (m_texture->GetHeight() / TEXT_SPRITE_DIV_HEIGHT);
 
 	//sets value of the drawn sprite modifier to 0, meaning it will draw the default sprite, in this case, the idle sprite
 	_spriteXPos = 25;
-	_spriteYPos = 349;
+	_spriteYPos = 348;
 
 	SymbolSelect(symbol);
 }
@@ -82,7 +82,7 @@ void CharacterText::SymbolSelect(char symbol) {
 
 	case '8':
 
-		_spriteXPos = 167;
+		_spriteXPos = 166;
 		break;
 
 	case '9':
@@ -128,6 +128,96 @@ void CharacterText::SymbolSelect(char symbol) {
 	case 'h':
 
 		_spriteXPos = 318;
+		break;
+
+	case 'i':
+
+		_spriteXPos = 330;
+		break;
+
+	case 'j':
+
+		_spriteXPos = 343;
+		break;
+
+	case 'k':
+
+		_spriteXPos = 356;
+		break;
+
+	case 'l':
+
+		_spriteXPos = 368;
+		break;
+
+	case 'm':
+
+		_spriteXPos = 383;
+		break;
+
+	case 'n':
+
+		_spriteXPos = 400;
+		break;
+
+	case 'o':
+
+		_spriteXPos = 415;
+		break;
+
+	case 'p':
+
+		_spriteXPos = 432;
+		break;
+
+	case 'q':
+
+		_spriteXPos = 447;
+		break;
+
+	case 'r':
+
+		_spriteXPos = 464;
+		break;
+
+	case 's':
+
+		_spriteXPos = 478;
+		break;
+
+	case 't':
+
+		_spriteXPos = 492;
+		break;
+
+	case 'u':
+
+		_spriteXPos = 506;
+		break;
+
+	case 'v':
+
+		_spriteXPos = 520;
+		break;
+
+	case 'w':
+
+		_spriteXPos = 534;
+		break;
+
+	case 'x':
+
+		_spriteXPos = 550;
+		break;
+
+	case 'y':
+
+		_spriteXPos = 564;
+		break;
+
+	case 'z':
+
+		_spriteXPos = 577;
 		break;
 	}
 }
