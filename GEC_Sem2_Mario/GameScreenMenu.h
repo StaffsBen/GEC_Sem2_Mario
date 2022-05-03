@@ -26,16 +26,8 @@ private:
 	float m_background_yPos;
 	void SetUpMusic();
 
-	//char vars
-	void CreateText(Vector2D position, char symbol);
-	CharacterText* _charText;
-	std::vector <CharacterText*> m_textChars;
-
 	//music var
 	MusicPlayer* m_musicplayer;
-
-	int _tempscore, _ts2; //temp, for testing, will remove
-	char _tempchar, _tc2; //^
 
 public:
 

@@ -37,6 +37,8 @@ GameScreenLevel1::~GameScreenLevel1() {
 	m_coins.clear();
 
 	m_enemies.clear();
+
+	m_textChars.clear();
 }
 
 void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
@@ -79,6 +81,8 @@ void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 
 	UpdateCoins(_deltaTime, e);
 
+	UpdateTextChars(_deltaTime, e);
+
 	//Spawns new Koopa's after 5 secs
 	_newKoopaTimer = (_newKoopaTimer - _deltaTime);
 
@@ -106,6 +110,10 @@ void GameScreenLevel1::Render() {
 	//renders coins
 	for (int i = 0; i < m_coins.size(); i++)
 		m_coins[i]->Render();
+
+	//renders text chars
+	for (int i = 0; i < m_textChars.size(); i++)
+		m_textChars[i]->Render();
 	
 	//draw the background
 	m_background_texture->Render(Vector2D(0, m_background_yPos), SDL_FLIP_NONE);
@@ -132,8 +140,8 @@ bool GameScreenLevel1::SetUpLevel() {
 
 	SetLevelMap();
 
-	_charMario = new CharacterMario(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(64, 315), m_level_map); //"Images/SpriteSheetDoubledTransparent.png"
-	_charLuigi = new CharacterLuigi(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(164, 315), m_level_map);
+	_charMario = new CharacterMario(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(64, 280), m_level_map);
+	_charLuigi = new CharacterLuigi(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(164, 280), m_level_map);
 
 	m_pow_block = new PowBlock(m_renderer, m_level_map);
 
@@ -142,6 +150,30 @@ bool GameScreenLevel1::SetUpLevel() {
 
 	CreateCoin(Vector2D(235, 350));
 	CreateCoin(Vector2D(255, 350));
+
+	CreateText(Vector2D(100, 20), 's');
+	CreateText(Vector2D(115, 20), 'c');
+	CreateText(Vector2D(130, 20), 'o');
+	CreateText(Vector2D(150, 20), 'r');
+	CreateText(Vector2D(165, 20), 'e');
+
+	CreateText(Vector2D(310, 20), 's');
+	CreateText(Vector2D(325, 20), 'c');
+	CreateText(Vector2D(340, 20), 'o');
+	CreateText(Vector2D(360, 20), 'r');
+	CreateText(Vector2D(375, 20), 'e');
+
+	_scoreDigitsMario = 0;
+	_scoreTenthsMario = 0;
+
+	_scoreDigitsLuigi = 0;
+	_scoreTenthsLuigi = 0;
+
+	CreateText(Vector2D(185, 20), _scoreTenthsMario);
+	CreateText(Vector2D(200, 20), _scoreDigitsMario);
+
+	CreateText(Vector2D(395, 20), _scoreTenthsLuigi);
+	CreateText(Vector2D(410, 20), _scoreDigitsLuigi);
 
 	m_screenshake = false;
 	m_background_yPos = 0.0f;
@@ -347,6 +379,62 @@ void GameScreenLevel1::CreateCoin(Vector2D position) {
 	m_coins.push_back(_charCoin);
 }
 
+void GameScreenLevel1::CreateText(Vector2D position, char symbol) {
+
+	//Creates text character and pushes to text char vector
+	_charText = new CharacterText(m_renderer, "Images/SpriteSheetDoubledTransparentSpacingFixWIPv3.png", position, nullptr, symbol);
+
+	m_textChars.push_back(_charText);
+}
+
+void GameScreenLevel1::UpdateTextChars(float _deltaTime, SDL_Event e) {
+
+	//system for player scoring system (pretty much just visual), could move to its own function
+
+	//text char vector vars
+	int _marioTenths = 10, _marioDigits = 11, _luigiTenths = 12, _luigiDigits = 13;
+
+	//converts score vals to char vals for text characters
+	_charDigitsMario = '0' + _scoreDigitsMario;
+	_charTenthsMario = '0' + _scoreTenthsMario;
+
+	_charDigitsLuigi = '0' + _scoreDigitsLuigi;
+	_charTenthsLuigi = '0' + _scoreTenthsLuigi;
+
+	//changes 11th and 12th text chars to match current respective score vals
+	m_textChars[_marioTenths]->SymbolSelect(_charTenthsMario);
+	m_textChars[_marioDigits]->SymbolSelect(_charDigitsMario);
+
+	m_textChars[_luigiTenths]->SymbolSelect(_charTenthsLuigi);
+	m_textChars[_luigiDigits]->SymbolSelect(_charDigitsLuigi);
+
+	//if digit reaches 10, tenth is increased by one and digit is reset to 0. eg 09 -> 10, 19 -> 20
+	if (_scoreDigitsMario == 10) {
+
+		//m_textChars[10]->SymbolSelect('0');
+		_scoreDigitsMario = 0;
+		_scoreTenthsMario++;
+	}
+
+	if (_scoreDigitsLuigi == 10) {
+
+		_scoreDigitsLuigi = 0;
+		_scoreTenthsLuigi++;
+	}
+
+	//should keep whole score at 99 when 9 is reached for both, but doesnt rn
+	if (_scoreTenthsMario >= 9) {
+
+		_scoreTenthsMario = 9;
+
+		if (_scoreDigitsMario >= 9) {
+
+			_scoreTenthsMario = 9;
+			_scoreDigitsMario = 9;
+		}
+	}
+}
+
 void GameScreenLevel1::UpdateCoins(float _deltaTime, SDL_Event e) {
 
 	if (!m_coins.empty())
@@ -362,11 +450,13 @@ void GameScreenLevel1::UpdateCoins(float _deltaTime, SDL_Event e) {
 
 				m_coins[i]->SetAlive(false);
 				std::cout << "Coin collected!\n";
+				_scoreDigitsMario++;
 			}
 			else if (Collisions::Instance()->Circle(m_coins[i], _charLuigi)) {
 
 				m_coins[i]->SetAlive(false);
 				std::cout << "Coin collected!\n";
+				_scoreDigitsLuigi++;
 			}
 
 			//if the enemy is no longer alive then schedule it for deletion
@@ -382,9 +472,4 @@ void GameScreenLevel1::UpdateCoins(float _deltaTime, SDL_Event e) {
 			m_coins.erase(m_coins.begin() + coinIndexToDelete);
 		}
 	}
-}
-
-void GameScreenLevel1::DisplayText() {
-
-	
 }
