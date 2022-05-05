@@ -19,6 +19,8 @@ public:
 	void SetPosition(Vector2D new_position);
 	Vector2D GetPosition();
 
+	void DeathSFX();
+
 private:
 
 	float m_single_sprite_w, m_single_sprite_h, _frameDelay;

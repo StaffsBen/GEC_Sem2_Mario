@@ -156,10 +156,12 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterCoin.cpp" />
     <ClCompile Include="CharacterKoopa.cpp" />
+    <ClCompile Include="CharacterKoopaRed.cpp" />
     <ClCompile Include="CharacterLuigi.cpp" />
     <ClCompile Include="CharacterMario.cpp" />
     <ClCompile Include="CharacterText.cpp" />
     <ClCompile Include="Collisions.cpp" />
+    <ClCompile Include="GameOverText.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="GameScreenLevel1.cpp" />
     <ClCompile Include="GameScreenManager.cpp" />
@@ -175,12 +177,14 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterCoin.h" />
     <ClInclude Include="CharacterKoopa.h" />
+    <ClInclude Include="CharacterKoopaRed.h" />
     <ClInclude Include="CharacterLuigi.h" />
     <ClInclude Include="CharacterMario.h" />
     <ClInclude Include="CharacterText.h" />
     <ClInclude Include="Collisions.h" />
     <ClInclude Include="Commons.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="GameOverText.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="GameScreenLevel1.h" />
     <ClInclude Include="GameScreenManager.h" />
@@ -190,6 +194,9 @@
     <ClInclude Include="PowBlock.h" />
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="Texture2D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

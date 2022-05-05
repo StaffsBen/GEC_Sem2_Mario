@@ -1,7 +1,7 @@
-#include "CharacterKoopa.h"
+#include "CharacterKoopaRed.h"
 #include "LevelMap.h"
 
-CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, FACING start_facing, float movement_speed, LevelMap* map) : Character(renderer, imagePath, start_position, map) {
+CharacterKoopaRed::CharacterKoopaRed(SDL_Renderer* renderer, std::string imagePath, Vector2D start_position, FACING start_facing, float movement_speed, LevelMap* map) : Character(renderer, imagePath, start_position, map) {
 
 	m_facing_direction = start_facing;
 	m_movement_speed = movement_speed;
@@ -19,12 +19,12 @@ CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Ve
 	_frameChange = false;
 }
 
-CharacterKoopa::~CharacterKoopa() {
+CharacterKoopaRed::~CharacterKoopaRed() {
 
-	
+
 }
 
-void CharacterKoopa::Render() {
+void CharacterKoopaRed::Render() {
 
 	//if injured move the X position to the right, to where the first injured sprite is
 	if (m_injured)
@@ -40,7 +40,7 @@ void CharacterKoopa::Render() {
 
 	//get the portion of the sprite sheet you want to draw
 	//							   {xPos, yPos, width of sprite, height of sprite}
-	SDL_Rect _portion_of_sprite = { (GREEN_KOOPA_SPRITE_POS_X + _spriteXPosAdjust), GREEN_KOOPA_SPRITE_POS_Y, m_single_sprite_w, m_single_sprite_h };
+	SDL_Rect _portion_of_sprite = { (RED_KOOPA_SPRITE_POS_X + _spriteXPosAdjust), RED_KOOPA_SPRITE_POS_Y, m_single_sprite_w, m_single_sprite_h };
 
 	//determine where you want it drawn
 	SDL_Rect _destRect = { (int)(m_position.x), (int)(m_position.y + KOOPA_SPRITE_DRAW_ADJUST), m_single_sprite_w, m_single_sprite_h };
@@ -56,7 +56,7 @@ void CharacterKoopa::Render() {
 	}
 }
 
-void CharacterKoopa::Update(float deltaTime, SDL_Event e) {
+void CharacterKoopaRed::Update(float deltaTime, SDL_Event e) {
 
 	//use the code within the base class
 	Character::Update(deltaTime, e);
@@ -68,7 +68,6 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e) {
 
 			m_moving_left = true;
 			m_moving_right = false;
-			//m_position.x -= deltaTime * GREEN_KOOPA_SPEED;
 		}
 		else if (m_facing_direction == FACING_RIGHT) {
 
@@ -108,7 +107,7 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e) {
 	}
 }
 
-void CharacterKoopa::TakeDamage() {
+void CharacterKoopaRed::TakeDamage() {
 
 	m_injured = true;
 
@@ -117,25 +116,25 @@ void CharacterKoopa::TakeDamage() {
 	Jump();
 }
 
-void CharacterKoopa::Jump() {
+void CharacterKoopaRed::Jump() {
 
 	if (!m_jumping) {
 
 		m_jump_force = INITIAL_JUMP_FORCE;
-		
+
 		m_jumping = true;
 
 		m_can_jump = false;
 	}
 }
 
-void CharacterKoopa::FlipRightWayUp() {
+void CharacterKoopaRed::FlipRightWayUp() {
 
 	if (m_facing_direction == FACING_LEFT)
 		m_facing_direction = FACING_RIGHT;
 	else
 		m_facing_direction = FACING_LEFT;
-	
+
 	m_injured = false;
 
 	_spriteXPosAdjust = 0;
@@ -143,7 +142,7 @@ void CharacterKoopa::FlipRightWayUp() {
 	Jump();
 }
 
-void CharacterKoopa::ChangeDirection() {
+void CharacterKoopaRed::ChangeDirection() {
 
 	if (m_facing_direction == FACING_LEFT) {
 
