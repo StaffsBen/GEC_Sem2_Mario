@@ -25,6 +25,9 @@ GameScreenLevel1::~GameScreenLevel1() {
 	delete m_musicplayer;
 	m_musicplayer = nullptr;
 
+	delete m_sfx;
+	m_sfx = nullptr;
+
 	delete _charMario;
 	_charMario = nullptr;
 
@@ -94,9 +97,11 @@ void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 
 			//SetLevelMap();
 
-			CreateKoopa(Vector2D(256, 32), FACING_RIGHT, KOOPA_SPEED);
+			CreateKoopa(_spriteSheet, Vector2D(50, 25), FACING_RIGHT, GREEN_KOOPA_SPEED);
 
 			_newKoopaTimer = NEW_KOOPA_TIMER;
+
+			m_sfx->PlaySFX("SFX/PipeSFX.wav");
 		}
 	}
 }
@@ -119,8 +124,11 @@ void GameScreenLevel1::Render() {
 	m_background_texture->Render(Vector2D(0, m_background_yPos), SDL_FLIP_NONE);
 
 	//renders player characters
-	_charMario->Render();
-	_charLuigi->Render();
+	if (_charMario->GetAlive())
+		_charMario->Render();
+	
+	if (_charLuigi->GetAlive())
+		_charLuigi->Render();
 
 	//renders PowBlock
 	m_pow_block->Render();
@@ -140,13 +148,13 @@ bool GameScreenLevel1::SetUpLevel() {
 
 	SetLevelMap();
 
-	_charMario = new CharacterMario(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(64, 280), m_level_map);
-	_charLuigi = new CharacterLuigi(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(164, 280), m_level_map);
+	_charMario = new CharacterMario(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(70, 280), m_level_map);
+	_charLuigi = new CharacterLuigi(m_renderer, "Images/SpriteSheetDoubledTransparent.png", Vector2D(410, 280), m_level_map);
 
 	m_pow_block = new PowBlock(m_renderer, m_level_map);
 
-	CreateKoopa(Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED);
-	CreateKoopa(Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED);
+	CreateKoopa(_spriteSheet, Vector2D(150, 32), FACING_RIGHT, GREEN_KOOPA_SPEED);
+	CreateKoopa(_spriteSheet, Vector2D(325, 32), FACING_LEFT, GREEN_KOOPA_SPEED);
 
 	CreateCoin(Vector2D(235, 350));
 	CreateCoin(Vector2D(255, 350));
@@ -230,6 +238,9 @@ void GameScreenLevel1::SetUpMusic() {
 	m_musicplayer = new MusicPlayer();
 	m_musicplayer->StopMusic();
 	m_musicplayer->PlayMusic("Audio/Mario.mp3");
+
+	m_sfx = new SoundEffect();
+	m_sfx->StopSFX();
 }
 
 void GameScreenLevel1::UpdatePowBlock() {
@@ -309,11 +320,16 @@ void GameScreenLevel1::UpdateEnemies(float _deltaTime, SDL_Event e) {
 			}
 
 			//check to see if enemy collides with player
-			if ((m_enemies[i]->GetPosition().y > 300.0f || m_enemies[i]->GetPosition().y <= 64.0f) && (m_enemies[i]->
-				GetPosition().x < 64.0f || m_enemies[i]->GetPosition().x > SCREEN_WIDTH - 96.0f)) { 
+			if ((m_enemies[i]->GetPosition().y <= 64.0f) && (m_enemies[i]->
+				GetPosition().x < 64.0f )) { 
 
 				//ignore collisions if behind pipe
 				//std::cout << "Behind Pipe!\n";
+			}
+			else if (m_enemies[i]->GetPosition().y > 300.0f && m_enemies[i]->GetPosition().x > SCREEN_WIDTH - 45.0f) {
+
+				m_enemies[i]->SetAlive(false);
+				m_sfx->PlaySFX("SFX/PipeSFX.wav");
 			}
 			else
 			{
@@ -323,12 +339,16 @@ void GameScreenLevel1::UpdateEnemies(float _deltaTime, SDL_Event e) {
 
 						m_enemies[i]->SetAlive(false);
 						std::cout << "Koopa dead!\n";
+						_scoreDigitsMario++;
+						m_sfx->PlaySFX("SFX/EnemyDeathSFX.wav");
 					}
 					else {
 
 						//kill mario
 						//_charMario->SetAlive(false);
 						std::cout << "Mario dead!\n";
+						_charMario->SetAlive(false);
+						_charMario->SetPosition(Vector2D(5000.0f, 5000.0f));
 					}
 				}
 				else if (Collisions::Instance()->Circle(m_enemies[i], _charLuigi)) {
@@ -337,12 +357,15 @@ void GameScreenLevel1::UpdateEnemies(float _deltaTime, SDL_Event e) {
 
 						m_enemies[i]->SetAlive(false);
 						std::cout << "Koopa dead!\n";
+						_scoreDigitsLuigi++;
 					}
 					else {
 
 						//kill luigi
 						//_charLuigi->SetAlive(false);
 						std::cout << "Luigi dead!\n";
+						_charLuigi->SetAlive(false);
+						_charLuigi->SetPosition(Vector2D(5000.0f, 6000.0f));
 					}
 				}
 			}
@@ -363,11 +386,11 @@ void GameScreenLevel1::UpdateEnemies(float _deltaTime, SDL_Event e) {
 
 }
 
-void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction, float speed) {
+void GameScreenLevel1::CreateKoopa(std::string texturePath, Vector2D position, FACING direction, float speed) {
 
 	//std::cout << "Levelmap " << (m_level_map == nullptr) << std::endl;
 
-	_charKoopa = new CharacterKoopa(m_renderer, "Images/SpriteSheetDoubledTransparentSpacingFixWIPbackup.png", position, direction, speed, m_level_map);
+	_charKoopa = new CharacterKoopa(m_renderer, texturePath, position, direction, speed, m_level_map); //"Images/SpriteSheetDoubledTransparentSpacingFixWIPbackup.png"
 
 	m_enemies.push_back(_charKoopa);
 }
@@ -451,12 +474,14 @@ void GameScreenLevel1::UpdateCoins(float _deltaTime, SDL_Event e) {
 				m_coins[i]->SetAlive(false);
 				std::cout << "Coin collected!\n";
 				_scoreDigitsMario++;
+				//m_sfx->PlaySFX("SFX/CoinSFX.mp3");
 			}
 			else if (Collisions::Instance()->Circle(m_coins[i], _charLuigi)) {
 
 				m_coins[i]->SetAlive(false);
 				std::cout << "Coin collected!\n";
 				_scoreDigitsLuigi++;
+				//m_sfx->PlaySFX("SFX/CoinSFX.mp3");
 			}
 
 			//if the enemy is no longer alive then schedule it for deletion

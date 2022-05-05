@@ -26,7 +26,8 @@
 
 //Koopa values
 #define INJURED_TIME 2.5f
-#define KOOPA_SPEED 96.0f
+#define GREEN_KOOPA_SPEED 96.0f
+#define RED_KOOPA_SPEED 150.0F
 #define NEW_KOOPA_TIMER 5.5f
 #define MAX_KOOPA_NUM 5
 

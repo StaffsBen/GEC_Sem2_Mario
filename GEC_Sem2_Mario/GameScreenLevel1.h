@@ -12,6 +12,7 @@
 #include "CharacterText.h"
 #include "LevelMap.h"
 #include "MusicPlayer.h"
+#include "SoundEffect.h"
 
 class Texture2D;
 
@@ -24,8 +25,9 @@ class GameScreenLevel1 : GameScreen
 
 private:
 
-	//background var
+	//texture vars
 	Texture2D* m_background_texture;
+	std::string _spriteSheet = "Images/SpriteSheetDoubledTransparentSpacingFixWIPbackup.png";
 
 	//player character vars
 	CharacterMario* _charMario;
@@ -33,7 +35,7 @@ private:
 
 	//enemy character vars and funcs
 	void UpdateEnemies(float _deltaTime, SDL_Event e);
-	void CreateKoopa(Vector2D position, FACING direction, float speed);
+	void CreateKoopa(std::string texturePath, Vector2D position, FACING direction, float speed);
 	std::vector<CharacterKoopa*> m_enemies;
 	CharacterKoopa* _charKoopa;
 	float _newKoopaTimer;
@@ -68,6 +70,9 @@ private:
 
 	//music player vars
 	MusicPlayer* m_musicplayer;
+
+	//SFX vars
+	SoundEffect* m_sfx;
 
 public:
 

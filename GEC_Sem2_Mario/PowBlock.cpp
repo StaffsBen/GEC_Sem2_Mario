@@ -15,6 +15,9 @@ PowBlock::PowBlock(SDL_Renderer* renderer, LevelMap* levelmap) {
 	m_single_sprite_h = m_texture->GetHeight();
 	m_num_hits_left = 3;
 	m_position = Vector2D((SCREEN_WIDTH * 0.5f) - m_single_sprite_w * 0.5f, 260);
+
+	m_sfx = new SoundEffect();
+	m_sfx->StopSFX();
 }
 
 PowBlock::~PowBlock() {
@@ -48,6 +51,7 @@ void PowBlock::Render() {
 void PowBlock::TakeHit() {
 
 	m_num_hits_left = m_num_hits_left - 1;
+	m_sfx->PlaySFX("SFX/BumpSFX.wav");
 
 	if (m_num_hits_left <= 0) {
 

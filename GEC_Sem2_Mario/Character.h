@@ -9,6 +9,7 @@
 #include <string>
 #include "Texture2D.h"
 #include "LevelMap.h"
+#include "SoundEffect.h"
 
 class Texture2D;
 
@@ -25,6 +26,8 @@ protected:
 	SDL_Renderer* m_renderer;
 	Vector2D m_position;
 	Texture2D* m_texture;
+
+	SoundEffect* m_sfx;
 
 	bool m_moving_left;
 	bool m_moving_right;
