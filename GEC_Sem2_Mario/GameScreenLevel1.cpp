@@ -156,6 +156,8 @@ bool GameScreenLevel1::SetUpLevel() {
 	CreateKoopa(_spriteSheet, Vector2D(150, 32), FACING_RIGHT, GREEN_KOOPA_SPEED);
 	CreateKoopa(_spriteSheet, Vector2D(325, 32), FACING_LEFT, GREEN_KOOPA_SPEED);
 
+	_charKoopaRed = new CharacterKoopaRed(m_renderer, _spriteSheet, Vector2D(70, 300), FACING_LEFT, RED_KOOPA_SPEED, m_level_map);
+
 	CreateCoin(Vector2D(235, 350));
 	CreateCoin(Vector2D(255, 350));
 
