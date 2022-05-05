@@ -148,10 +148,14 @@ void CharacterMario::Update(float deltaTime, SDL_Event e) {
 void CharacterMario::SetPosition(Vector2D new_position) {
 
 	m_position = new_position;
-	m_sfx->PlaySFX("SFX/DeathSFX.wav");
 }
 
 Vector2D CharacterMario::GetPosition() {
 
 	return m_position;
+}
+
+void CharacterMario::DeathSFX() {
+
+	m_sfx->PlaySFX("SFX/DeathSFX.wav");
 }

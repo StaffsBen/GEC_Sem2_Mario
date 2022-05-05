@@ -40,7 +40,7 @@ void CharacterKoopa::Render() {
 
 	//get the portion of the sprite sheet you want to draw
 	//							   {xPos, yPos, width of sprite, height of sprite}
-	SDL_Rect _portion_of_sprite = { (KOOPA_SPRITE_POS_X + _spriteXPosAdjust), KOOPA_SPRITE_POS_Y, m_single_sprite_w, m_single_sprite_h };
+	SDL_Rect _portion_of_sprite = { (GREEN_KOOPA_SPRITE_POS_X + _spriteXPosAdjust), GREEN_KOOPA_SPRITE_POS_Y, m_single_sprite_w, m_single_sprite_h };
 
 	//determine where you want it drawn
 	SDL_Rect _destRect = { (int)(m_position.x), (int)(m_position.y + KOOPA_SPRITE_DRAW_ADJUST), m_single_sprite_w, m_single_sprite_h };
@@ -68,6 +68,7 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e) {
 
 			m_moving_left = true;
 			m_moving_right = false;
+			//m_position.x -= deltaTime * GREEN_KOOPA_SPEED;
 		}
 		else if (m_facing_direction == FACING_RIGHT) {
 

@@ -144,10 +144,14 @@ void CharacterLuigi::Update(float deltaTime, SDL_Event e) {
 void CharacterLuigi::SetPosition(Vector2D new_position) {
 
 	m_position = new_position;
-	m_sfx->PlaySFX("SFX/DeathSFX.wav");
 }
 
 Vector2D CharacterLuigi::GetPosition() {
 
 	return m_position;
+}
+
+void CharacterLuigi::DeathSFX() {
+
+	m_sfx->PlaySFX("SFX/DeathSFX.wav");
 }

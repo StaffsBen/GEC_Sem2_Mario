@@ -14,6 +14,7 @@
 #include "LevelMap.h"
 #include "MusicPlayer.h"
 #include "SoundEffect.h"
+#include <time.h>
 
 class Texture2D;
 
@@ -28,18 +29,27 @@ private:
 
 	//texture vars
 	Texture2D* m_background_texture;
-	std::string _spriteSheet = "Images/SpriteSheetDoubledTransparentSpacingFixWIPbackup.png";
+	std::string _spriteSheet = "Images/SpriteSheetDoubledTransparentSpacingFixWIPv4.png";
 
 	//player character vars
 	CharacterMario* _charMario;
 	CharacterLuigi* _charLuigi;
 
 	//enemy character vars and funcs
-	void UpdateEnemies(float _deltaTime, SDL_Event e);
-	void CreateKoopa(std::string texturePath, Vector2D position, FACING direction, float speed);
-	std::vector<CharacterKoopa*> m_enemies;
-	CharacterKoopa* _charKoopa;
-	float _newKoopaTimer;
+	void UpdateGreenKoopas(float _deltaTime, SDL_Event e);
+	void CreateGreenKoopa(std::string texturePath, Vector2D position, FACING direction, float speed);
+	std::vector<CharacterKoopa*> m_greenKoopas;
+	CharacterKoopa* _charKoopaGreen;
+	float _newGreenKoopaTimer;
+
+	bool _newKoopaTimerEnabled;
+
+	void UpdateRedKoopas(float _deltaTime, SDL_Event e);
+	void CreateRedKoopa(std::string texturePath, Vector2D position, FACING direction, float speed);
+	std::vector<CharacterKoopaRed*> m_redKoopas;
+	CharacterKoopaRed* _charKoopaRed;
+	float _newRedKoopaTimer, _redKoopaJumpTimer;
+	bool _redKoopaJumpChance;
 
 	CharacterKoopaRed* _charKoopaRed;
 
@@ -50,12 +60,14 @@ private:
 	void UpdateCoins(float _deltaTime, SDL_Event e);
 
 	//char vars
-	void CreateText(Vector2D position, char symbol);
+	void CreateText(std::string texturePath, Vector2D position, char symbol);
 	CharacterText* _charText;
 	std::vector <CharacterText*> m_textChars;
 	void UpdateTextChars(float _deltaTime, SDL_Event e);
 	int _scoreDigitsMario, _scoreTenthsMario, _scoreDigitsLuigi, _scoreTenthsLuigi;
 	int _charDigitsMario, _charTenthsMario, _charDigitsLuigi, _charTenthsLuigi;
+	float _scoreTimer;
+	bool _gameOverTextEnableStep1, _gameOverTextEnableStep2;
 
 	//level funcs and var
 	bool SetUpLevel();

@@ -21,7 +21,7 @@ private:
 
 protected:
 
-	FACING m_facing_direction;
+	
 
 	SDL_Renderer* m_renderer;
 	Vector2D m_position;
@@ -67,6 +67,8 @@ public:
 
 	void SetAlive(bool isAlive);
 	bool GetAlive() { return m_alive; }
+
+	FACING m_facing_direction;
 };
 
 #endif _CHARACTER_H
