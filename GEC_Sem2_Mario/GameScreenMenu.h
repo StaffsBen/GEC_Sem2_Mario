@@ -4,10 +4,14 @@
 
 #include "GameScreen.h"
 #include "Commons.h"
+#include <vector>
 #include "Texture2D.h"
 #include "MusicPlayer.h"
+#include "CharacterText.h"
 
 class Texture2D;
+
+class Character;
 
 class GameScreenMenu : GameScreen
 {
@@ -33,7 +37,7 @@ public:
 	void Render() override;
 	void Update(float _deltaTime, SDL_Event e) override;
 
-	void UpdatePowBlock();
+	
 };
 
 #endif _GAMESCREENMENU_H

@@ -16,14 +16,13 @@ GameScreenMenu::~GameScreenMenu() {
 
 	delete m_background_texture;
 	m_background_texture = nullptr;
-
+	
 	delete m_musicplayer;
 	m_musicplayer = nullptr;
 }
 
 void GameScreenMenu::Update(float _deltaTime, SDL_Event e) {
 
-	
 }
 
 void GameScreenMenu::Render() {

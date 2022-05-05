@@ -9,6 +9,7 @@
 #include "CharacterLuigi.h"
 #include "CharacterKoopa.h"
 #include "CharacterCoin.h"
+#include "CharacterText.h"
 #include "LevelMap.h"
 #include "MusicPlayer.h"
 
@@ -43,9 +44,13 @@ private:
 	std::vector<CharacterCoin*> m_coins;
 	void UpdateCoins(float _deltaTime, SDL_Event e);
 
-	//Score vars and funcs
-	int _playerScore;
-	void DisplayText();
+	//char vars
+	void CreateText(Vector2D position, char symbol);
+	CharacterText* _charText;
+	std::vector <CharacterText*> m_textChars;
+	void UpdateTextChars(float _deltaTime, SDL_Event e);
+	int _scoreDigitsMario, _scoreTenthsMario, _scoreDigitsLuigi, _scoreTenthsLuigi;
+	int _charDigitsMario, _charTenthsMario, _charDigitsLuigi, _charTenthsLuigi;
 
 	//level funcs and var
 	bool SetUpLevel();
