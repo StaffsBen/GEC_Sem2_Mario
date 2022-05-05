@@ -20,6 +20,9 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	m_collision_radius = 15;
 
 	m_alive = true;
+
+	m_sfx = new SoundEffect();
+	m_sfx->StopSFX();
 }
 
 Character::~Character() {

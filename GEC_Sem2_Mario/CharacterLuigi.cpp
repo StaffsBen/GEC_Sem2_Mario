@@ -87,8 +87,11 @@ void CharacterLuigi::Update(float deltaTime, SDL_Event e) {
 
 		case SDLK_UP:
 
-			if (m_can_jump)
+			if (m_can_jump) {
+
 				Jump();
+				m_sfx->PlaySFX("SFX/JumpSFX.wav");
+			}
 
 			break;
 		}
@@ -140,7 +143,8 @@ void CharacterLuigi::Update(float deltaTime, SDL_Event e) {
 
 void CharacterLuigi::SetPosition(Vector2D new_position) {
 
-
+	m_position = new_position;
+	m_sfx->PlaySFX("SFX/DeathSFX.wav");
 }
 
 Vector2D CharacterLuigi::GetPosition() {

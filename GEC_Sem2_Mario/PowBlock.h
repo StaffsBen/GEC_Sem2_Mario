@@ -7,6 +7,7 @@
 #include "LevelMap.h"
 #include "Commons.h"
 #include "Texture2D.h"
+#include "SoundEffect.h"
 
 class LevelMap;
 
@@ -31,6 +32,8 @@ private:
 
 	float m_single_sprite_w, m_single_sprite_h;
 	int m_num_hits_left;
+
+	SoundEffect* m_sfx;
 };
 
 #endif _POWBLOCK_H

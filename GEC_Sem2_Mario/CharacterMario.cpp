@@ -87,8 +87,12 @@ void CharacterMario::Update(float deltaTime, SDL_Event e) {
 
 		case SDLK_w:
 
-			if (m_can_jump)
+			if (m_can_jump) {
+
 				Jump();
+				m_sfx->PlaySFX("SFX/JumpSFX.wav");
+			}
+
 			break;
 		}
 
@@ -143,7 +147,8 @@ void CharacterMario::Update(float deltaTime, SDL_Event e) {
 
 void CharacterMario::SetPosition(Vector2D new_position) {
 
-
+	m_position = new_position;
+	m_sfx->PlaySFX("SFX/DeathSFX.wav");
 }
 
 Vector2D CharacterMario::GetPosition() {
