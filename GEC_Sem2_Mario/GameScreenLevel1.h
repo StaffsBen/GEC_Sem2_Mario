@@ -51,6 +51,8 @@ private:
 	float _newRedKoopaTimer, _redKoopaJumpTimer;
 	bool _redKoopaJumpChance;
 
+	CharacterKoopaRed* _charKoopaRed;
+
 	//coin vars and funcs
 	void CreateCoin(Vector2D position);
 	CharacterCoin* _charCoin;
