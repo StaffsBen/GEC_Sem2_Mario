@@ -8,6 +8,7 @@
 #include "CharacterMario.h"
 #include "CharacterLuigi.h"
 #include "CharacterKoopa.h"
+#include "CharacterKoopaRed.h"
 #include "CharacterCoin.h"
 #include "CharacterText.h"
 #include "LevelMap.h"
@@ -39,6 +40,8 @@ private:
 	std::vector<CharacterKoopa*> m_enemies;
 	CharacterKoopa* _charKoopa;
 	float _newKoopaTimer;
+
+	CharacterKoopaRed* _charKoopaRed;
 
 	//coin vars and funcs
 	void CreateCoin(Vector2D position);
