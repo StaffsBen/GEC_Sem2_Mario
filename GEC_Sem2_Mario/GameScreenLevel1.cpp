@@ -338,21 +338,6 @@ void GameScreenLevel1::SetLevelMap() {
 
 	std::cout << "Levelmap made" << std::endl;
 
-	/*int map[MAP_HEIGHT][MAP_WIDTH] = { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },			original levelmap
-									   { 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1 },
-									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-									   { 0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0 },
-									   { 1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1 },
-									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-									   { 0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0 },
-									   { 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1 },
-									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-									   { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 }
-	};*/
-
 	int map[MAP_HEIGHT][MAP_WIDTH] = { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },		//modified levelmap, left platforms extended to match background
 									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 									   { 1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1 },
@@ -382,7 +367,7 @@ void GameScreenLevel1::SetUpMusic() {
 
 	m_musicplayer = new MusicPlayer();
 	m_musicplayer->StopMusic();
-	m_musicplayer->PlayMusic("Audio/Mario.mp3");
+	m_musicplayer->PlayMusic("Audio/MarioLevel1.mp3");
 
 	m_sfx = new SoundEffect();
 	m_sfx->StopSFX();
@@ -505,6 +490,7 @@ void GameScreenLevel1::UpdateGreenKoopas(float _deltaTime, SDL_Event e) {
 						m_greenKoopas[i]->SetAlive(false);
 						std::cout << "Koopa dead!\n";
 						_scoreDigitsLuigi++;
+						m_sfx->PlaySFX("SFX/EnemyDeathSFX.wav");
 					}
 					else {
 

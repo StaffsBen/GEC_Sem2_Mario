@@ -150,12 +150,12 @@ bool Update() {
 		return true;
 		break;
 
-	case SDLK_1:
+	case SDLK_0:
 
 		game_screen_manager->ChangeScreen(SCREEN_MENU);
 		break;
 
-	case SDLK_2:
+	case SDLK_1:
 
 		game_screen_manager->ChangeScreen(SCREEN_LEVEL1);
 		break;
