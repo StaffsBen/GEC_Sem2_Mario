@@ -79,9 +79,6 @@
     <ClCompile Include="CharacterKoopaRed.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverText.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -139,9 +136,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CharacterKoopaRed.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameOverText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

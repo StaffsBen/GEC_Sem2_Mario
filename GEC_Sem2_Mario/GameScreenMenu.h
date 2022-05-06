@@ -7,6 +7,9 @@
 #include <vector>
 #include "Texture2D.h"
 #include "MusicPlayer.h"
+#include "LevelMap.h"
+#include "Character.h"
+#include "CharacterMario.h"
 #include "CharacterText.h"
 
 class Texture2D;
@@ -18,13 +21,24 @@ class GameScreenMenu : GameScreen
 
 private:
 
-	//background var
+	//texture var
 	Texture2D* m_background_texture;
+	std::string _spriteSheet = "Images/SpriteSheetDoubledTransparentSpacingFixWIPv4.png";
 
 	//level funcs and var
 	bool SetUpLevel();
+	LevelMap* m_level_map;
+	void SetLevelMap();
 	float m_background_yPos;
 	void SetUpMusic();
+
+	//mario vars
+	CharacterMario* _charMario;
+
+	//text char vars
+	void CreateText(std::string texturePath, Vector2D position, char symbol);
+	CharacterText* _charText;
+	std::vector <CharacterText*> m_textChars;
 
 	//music var
 	MusicPlayer* m_musicplayer;
