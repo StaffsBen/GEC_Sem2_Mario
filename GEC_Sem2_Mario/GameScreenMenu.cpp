@@ -7,6 +7,8 @@
 
 GameScreenMenu::GameScreenMenu(SDL_Renderer* renderer) : GameScreen(renderer) {
 
+	//_gSM = new GameScreenManager(renderer, SCREEN_LEVEL1);
+
 	SetUpLevel();
 
 	SetUpMusic();
@@ -29,6 +31,14 @@ GameScreenMenu::~GameScreenMenu() {
 void GameScreenMenu::Update(float _deltaTime, SDL_Event e) {
 
 	_charMario->Update(_deltaTime, e);
+
+	/*switch (e.key.keysym.sym) {
+
+	case SDLK_p:
+
+		_gSM->ChangeScreen(SCREEN_LEVEL1);
+		break;
+	}*/
 }
 
 void GameScreenMenu::Render() {

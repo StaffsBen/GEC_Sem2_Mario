@@ -1,8 +1,8 @@
 #pragma once
 #ifndef _GAMESCREENMENU_H
 #define _GAMESCREENMENU_H
-
 #include "GameScreen.h"
+#include "GameScreenManager.h"
 #include "Commons.h"
 #include <vector>
 #include "Texture2D.h"
@@ -31,6 +31,8 @@ private:
 	void SetLevelMap();
 	float m_background_yPos;
 	void SetUpMusic();
+
+	//GameScreenManager* _gSM;
 
 	//mario vars
 	CharacterMario* _charMario;

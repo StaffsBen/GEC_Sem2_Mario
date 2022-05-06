@@ -136,19 +136,9 @@ bool Update() {
 
 		return true;
 		break;
-
-	case SDL_MOUSEBUTTONDOWN:
-
-		return true;
-		break;
 	}
 
 	switch (e.key.keysym.sym) {
-
-	case SDLK_q:
-
-		return true;
-		break;
 
 	case SDLK_0:
 
