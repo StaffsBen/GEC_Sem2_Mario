@@ -1,10 +1,10 @@
 #include <iostream>
 #include "Texture2D.h"
-#include "GameScreenLevel1.h"
+#include "GameScreenLevel2.h"
 #include "Collisions.h"
 #include "PowBlock.h"
 
-GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer) {
+GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer) : GameScreen(renderer) {
 
 	srand(time(NULL));
 
@@ -12,8 +12,8 @@ GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer
 
 	SetUpMusic();
 
-	_newGreenKoopaTimer = NEW_KOOPA_TIMER_LV1;
-	_newRedKoopaTimer = NEW_KOOPA_TIMER_LV1;
+	_newGreenKoopaTimer = NEW_GREEN_KOOPA_TIMER_LV2;
+	_newRedKoopaTimer = NEW_RED_KOOPA_TIMER_LV2;
 	_newKoopaTimerEnabled = true;
 
 	_redKoopaJumpTimer = (rand() / RAND_MAX);
@@ -25,10 +25,7 @@ GameScreenLevel1::GameScreenLevel1(SDL_Renderer* renderer) : GameScreen(renderer
 	_gameOverTextEnableStep2 = true;
 }
 
-GameScreenLevel1::~GameScreenLevel1() {
-
-	delete m_background_colour;
-	m_background_colour = nullptr;
+GameScreenLevel2::~GameScreenLevel2() {
 
 	delete m_background_texture;
 	m_background_texture = nullptr;
@@ -54,10 +51,12 @@ GameScreenLevel1::~GameScreenLevel1() {
 
 	m_redKoopas.clear();
 
+	m_fireBalls.clear();
+
 	m_textChars.clear();
 }
 
-void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
+void GameScreenLevel2::Update(float _deltaTime, SDL_Event e) {
 
 	//does screen shake if required
 	if (m_screenshake) {
@@ -74,9 +73,10 @@ void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 			m_background_yPos = 0.0f;
 		}
 	}
-	
-	//update character
+
 	UpdateMarioBros(_deltaTime, e);
+
+	UpdateFireball(_deltaTime, e);
 
 	UpdatePowBlock();
 
@@ -98,13 +98,13 @@ void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 	//Spawns new green Koopa's after 5 secs, if the timer has been enabled, and if the number of green koopas is less than the max allowed
 	if (_newGreenKoopaTimer <= 0.0f) {
 
-		if (m_greenKoopas.size() < MAX_GREEN_KOOPA_NUM_LV1) {
+		if (m_greenKoopas.size() < MAX_GREEN_KOOPA_NUM_LV2) {
 
 			std::cout << "Koopa spawn!\n";
 
 			CreateGreenKoopa(_spriteSheet, Vector2D(50, 25), FACING_RIGHT, GREEN_KOOPA_SPEED);
 
-			_newGreenKoopaTimer = NEW_KOOPA_TIMER_LV1;
+			_newGreenKoopaTimer = NEW_GREEN_KOOPA_TIMER_LV2;
 
 			m_sfx->PlaySFX("SFX/PipeSFX.wav");
 		}
@@ -113,13 +113,13 @@ void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 	//Spawns new red Koopa's after 5 secs, if the timer has been enabled, and if the number of red is less than the max allowed
 	if (_newRedKoopaTimer <= 0.0f) {
 
-		if (m_redKoopas.size() < MAX_RED_KOOPA_NUM_LV1) {
+		if (m_redKoopas.size() < MAX_RED_KOOPA_NUM_LV2) {
 
 			std::cout << "Koopa spawn!\n";
 
 			CreateRedKoopa(_spriteSheet, Vector2D(460, 25), FACING_LEFT, RED_KOOPA_SPEED);
 
-			_newRedKoopaTimer = NEW_KOOPA_TIMER_LV1;
+			_newRedKoopaTimer = NEW_RED_KOOPA_TIMER_LV2;
 
 			m_sfx->PlaySFX("SFX/PipeSFX.wav");
 		}
@@ -144,17 +144,21 @@ void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 
 		if (_charMario->GetAlive())
 			_scoreDigitsMario++;
-		
+
 		if (_charLuigi->GetAlive())
 			_scoreDigitsLuigi++;
 	}
 
-	//if both mario and luigi are dead, kill all koopas and stop new koopas spawning, also creates game over text
+	//if both mario and luigi are dead, kill all enemies and stop new enemies spawning, also creates game over text
 	if (!_charMario->GetAlive() && !_charLuigi->GetAlive()) {
 
 		m_greenKoopas.clear();
 		m_redKoopas.clear();
 		_newKoopaTimerEnabled = false;
+
+		m_fireBalls.clear();
+
+		m_coins.clear();
 
 		//enables the first step of the game over text creation
 		_gameOverTextEnableStep1 = true;
@@ -180,10 +184,7 @@ void GameScreenLevel1::Update(float _deltaTime, SDL_Event e) {
 	}
 }
 
-void GameScreenLevel1::Render() {
-
-	//draws bg colour
-	m_background_colour->Render(Vector2D(0, m_background_yPos), SDL_FLIP_NONE);
+void GameScreenLevel2::Render() {
 
 	//renders enemy chars
 	for (int i = 0; i < m_greenKoopas.size(); i++)
@@ -199,39 +200,30 @@ void GameScreenLevel1::Render() {
 	//renders text chars
 	for (int i = 0; i < m_textChars.size(); i++)
 		m_textChars[i]->Render();
-	
+
 	//draw the background
 	m_background_texture->Render(Vector2D(0, m_background_yPos), SDL_FLIP_NONE);
 
 	//renders player characters
-	if (_charMario->GetAlive())
-		_charMario->Render();
-	
-	if (_charLuigi->GetAlive())
-		_charLuigi->Render();
+	_charMario->Render(); 
+	_charLuigi->Render();
+
+	//renders fireball
+	for (int i = 0; i < m_fireBalls.size(); i++)
+		m_fireBalls[i]->Render();
 
 	//renders PowBlock
 	m_pow_block->Render();
 }
 
-bool GameScreenLevel1::SetUpLevel() {
-
-	//loads bg colour
-	m_background_colour = new Texture2D(m_renderer);
-
-	if (!m_background_colour->LoadFromFile("Images/Background_Colour.png")) {
-
-		std::cout << "Failed to load background colour! Error: " << SDL_GetError() << std::endl;
-
-		return false;
-	}
+bool GameScreenLevel2::SetUpLevel() {
 
 	//load bg texture
 	m_background_texture = new Texture2D(m_renderer);
 
-	if (!m_background_texture->LoadFromFile("Images/BackgroundMB.png")) {
+	if (!m_background_texture->LoadFromFile("Images/BackgroundMB_Lv2_v3.png")) {
 
-		std::cout << "Failed to load background texture! Error: " << SDL_GetError() << std::endl; 
+		std::cout << "Failed to load background texture! Error: " << SDL_GetError() << std::endl;
 
 		return false;
 	}
@@ -243,13 +235,10 @@ bool GameScreenLevel1::SetUpLevel() {
 	CreateMarioBros(_spriteSheet, Vector2D(70, 245), Vector2D(410, 245));
 
 	//create an instance of the PowBlock
-	m_pow_block = new PowBlock(m_renderer, m_level_map, Vector2D((SCREEN_WIDTH * 0.5f) - 32 * 0.5f, 260));
+	m_pow_block = new PowBlock(m_renderer, m_level_map, Vector2D((SCREEN_WIDTH * 0.5) - 10, SCREEN_HEIGHT * 0.4));
 
-	//creates 2 instances of the green koopas, and 1 of the reed koopa
-	CreateGreenKoopa(_spriteSheet, Vector2D(150, 32), FACING_RIGHT, GREEN_KOOPA_SPEED);
-	CreateGreenKoopa(_spriteSheet, Vector2D(325, 32), FACING_LEFT, GREEN_KOOPA_SPEED);
-
-	CreateRedKoopa(_spriteSheet, Vector2D(460, 25), FACING_LEFT, RED_KOOPA_SPEED);
+	//creates fireball
+	CreateFireball(_spriteSheet, Vector2D(542, 125), FACING_LEFT, MOVEMENTSPEED);
 
 	//creates 2 instances of the coin
 	CreateCoin(Vector2D(235, 350));
@@ -287,20 +276,20 @@ bool GameScreenLevel1::SetUpLevel() {
 	return true;
 }
 
-void GameScreenLevel1::SetLevelMap() {
+void GameScreenLevel2::SetLevelMap() {
 
 	std::cout << "Levelmap made" << std::endl;
 
-	int map[MAP_HEIGHT][MAP_WIDTH] = { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },		//modified levelmap, left platforms extended to match background
+	int map[MAP_HEIGHT][MAP_WIDTH] = { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-									   { 1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1 },
+									   { 1,1,1,0,0,1,1,1,1,1,1,1,0,0,1,1 },
 									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-									   { 0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0 },
-									   { 1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1 },
 									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 									   { 0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0 },
-									   { 1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1 },
+									   { 1,1,1,1,1,1,0,0,0,0,0,0,1,1,0,0 },
+									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+									   { 0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0 },
 									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 									   { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
 									   { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 }
@@ -316,45 +305,51 @@ void GameScreenLevel1::SetLevelMap() {
 	m_level_map = new LevelMap(map);
 }
 
-void GameScreenLevel1::SetUpMusic() {
+void GameScreenLevel2::SetUpMusic() {
 
 	m_musicplayer = new MusicPlayer();
 	m_musicplayer->StopMusic();
-	m_musicplayer->PlayMusic("Audio/MarioLevel1.mp3");
+	m_musicplayer->PlayMusic("Audio/MarioLevel2.mp3");
 
 	m_sfx = new SoundEffect();
 	m_sfx->StopSFX();
 }
 
-void GameScreenLevel1::CreateMarioBros(std::string texturePath, Vector2D mario_position, Vector2D luigi_position) {
+void GameScreenLevel2::CreateMarioBros(std::string texturePath, Vector2D mario_position, Vector2D luigi_position) {
 
 	_charMario = new CharacterMario(m_renderer, _spriteSheet, mario_position, m_level_map);
 
 	_charLuigi = new CharacterLuigi(m_renderer, _spriteSheet, luigi_position, m_level_map);
 }
 
-void GameScreenLevel1::CreateGreenKoopa(std::string texturePath, Vector2D position, FACING direction, float speed) {
+void GameScreenLevel2::CreateGreenKoopa(std::string texturePath, Vector2D position, FACING direction, float speed) {
 
 	_charKoopaGreen = new CharacterKoopa(m_renderer, texturePath, position, direction, speed, m_level_map); //"Images/SpriteSheetDoubledTransparentSpacingFixWIPbackup.png"
 
 	m_greenKoopas.push_back(_charKoopaGreen);
 }
 
-void GameScreenLevel1::CreateRedKoopa(std::string texturePath, Vector2D position, FACING direction, float speed) {
+void GameScreenLevel2::CreateRedKoopa(std::string texturePath, Vector2D position, FACING direction, float speed) {
 
 	_charKoopaRed = new CharacterKoopaRed(m_renderer, texturePath, position, direction, speed, m_level_map); //"Images/SpriteSheetDoubledTransparentSpacingFixWIPbackup.png"
 
 	m_redKoopas.push_back(_charKoopaRed);
 }
 
-void GameScreenLevel1::CreateCoin(Vector2D position) {
+void GameScreenLevel2::CreateFireball(std::string texturePath, Vector2D position, FACING direction, float speed) {
+
+	_charFireball = new CharacterFireball(m_renderer, texturePath, position, direction, speed, m_level_map);
+	m_fireBalls.push_back(_charFireball);
+}
+
+void GameScreenLevel2::CreateCoin(Vector2D position) {
 
 	_charCoin = new CharacterCoin(m_renderer, "Images/Coin.png", position, m_level_map);
 
 	m_coins.push_back(_charCoin);
 }
 
-void GameScreenLevel1::CreateText(std::string texturePath, Vector2D position, char symbol) {
+void GameScreenLevel2::CreateText(std::string texturePath, Vector2D position, char symbol) {
 
 	//Creates text character and pushes to text char vector
 	_charText = new CharacterText(m_renderer, texturePath, position, nullptr, symbol);
@@ -362,7 +357,7 @@ void GameScreenLevel1::CreateText(std::string texturePath, Vector2D position, ch
 	m_textChars.push_back(_charText);
 }
 
-void GameScreenLevel1::UpdateMarioBros(float _deltaTime, SDL_Event e) {
+void GameScreenLevel2::UpdateMarioBros(float _deltaTime, SDL_Event e) {
 
 	//update mario bros
 	_charMario->Update(_deltaTime, e);
@@ -439,9 +434,9 @@ void GameScreenLevel1::UpdateMarioBros(float _deltaTime, SDL_Event e) {
 	}
 }
 
-void GameScreenLevel1::UpdatePowBlock() {
+void GameScreenLevel2::UpdatePowBlock() {
 
-	int _levelNo = 1;
+	int _levelNo = 2;
 
 	if (Collisions::Instance()->Box(_charMario->GetCollisionBox(), m_pow_block->GetCollisionBox())) {
 
@@ -471,7 +466,7 @@ void GameScreenLevel1::UpdatePowBlock() {
 	}
 }
 
-void GameScreenLevel1::UpdateGreenKoopas(float _deltaTime, SDL_Event e) {
+void GameScreenLevel2::UpdateGreenKoopas(float _deltaTime, SDL_Event e) {
 
 	if (!m_greenKoopas.empty())
 	{
@@ -558,7 +553,7 @@ void GameScreenLevel1::UpdateGreenKoopas(float _deltaTime, SDL_Event e) {
 	}
 }
 
-void GameScreenLevel1::UpdateRedKoopas(float _deltaTime, SDL_Event e) {
+void GameScreenLevel2::UpdateRedKoopas(float _deltaTime, SDL_Event e) {
 
 	if (!m_redKoopas.empty())
 	{
@@ -632,7 +627,40 @@ void GameScreenLevel1::UpdateRedKoopas(float _deltaTime, SDL_Event e) {
 	}
 }
 
-void GameScreenLevel1::UpdateTextChars(float _deltaTime, SDL_Event e) {
+void GameScreenLevel2::UpdateFireball(float _deltaTime, SDL_Event e) {
+
+	//update fireball
+	for (int i = 0; i < m_fireBalls.size(); i++) {
+
+		m_fireBalls[i]->Update(_deltaTime, e);
+
+		//if fireball goes off screen to left, destroy it and respawn off screen to right
+		if (m_fireBalls[i]->GetPosition().x < -31) {
+
+			m_fireBalls.clear();
+
+			//creates fireball
+			CreateFireball(_spriteSheet, Vector2D(542, 125), FACING_LEFT, MOVEMENTSPEED);
+		}
+
+		if (Collisions::Instance()->Circle(m_fireBalls[i], _charMario)) {
+
+			std::cout << "Mario dead!\n";
+			_charMario->SetAlive(false);
+			_charMario->SetPosition(Vector2D(5000.0f, 5000.0f));
+			_charMario->DeathSFX();
+		}
+		else if (Collisions::Instance()->Circle(m_fireBalls[i], _charLuigi)) {
+
+			std::cout << "Luigi dead!\n";
+			_charLuigi->SetAlive(false);
+			_charLuigi->SetPosition(Vector2D(5050.0f, 5000.0f));
+			_charLuigi->DeathSFX();
+		}
+	}
+}
+
+void GameScreenLevel2::UpdateTextChars(float _deltaTime, SDL_Event e) {
 
 	//system for player scoring system (pretty much just visual)
 
@@ -680,7 +708,7 @@ void GameScreenLevel1::UpdateTextChars(float _deltaTime, SDL_Event e) {
 	}
 }
 
-void GameScreenLevel1::UpdateCoins(float _deltaTime, SDL_Event e) {
+void GameScreenLevel2::UpdateCoins(float _deltaTime, SDL_Event e) {
 
 	if (!m_coins.empty())
 	{
@@ -721,7 +749,7 @@ void GameScreenLevel1::UpdateCoins(float _deltaTime, SDL_Event e) {
 	}
 }
 
-void GameScreenLevel1::DoScreenShake() {
+void GameScreenLevel2::DoScreenShake() {
 
 	m_screenshake = true;
 	m_shake_time = SHAKE_DURATION;

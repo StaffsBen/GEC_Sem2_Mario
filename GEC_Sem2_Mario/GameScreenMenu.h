@@ -1,8 +1,8 @@
 #pragma once
 #ifndef _GAMESCREENMENU_H
 #define _GAMESCREENMENU_H
-
 #include "GameScreen.h"
+#include "GameScreenManager.h"
 #include "Commons.h"
 #include <vector>
 #include "Texture2D.h"
@@ -23,7 +23,7 @@ private:
 
 	//texture var
 	Texture2D* m_background_texture;
-	std::string _spriteSheet = "Images/SpriteSheetDoubledTransparentSpacingFixWIPv4.png";
+	std::string _spriteSheet = "Images/SpriteSheetDoubledTransparentSpacingFixWIPv5.png";
 
 	//level funcs and var
 	bool SetUpLevel();
@@ -31,6 +31,8 @@ private:
 	void SetLevelMap();
 	float m_background_yPos;
 	void SetUpMusic();
+
+	//GameScreenManager* _gSM;
 
 	//mario vars
 	CharacterMario* _charMario;
@@ -50,8 +52,6 @@ public:
 
 	void Render() override;
 	void Update(float _deltaTime, SDL_Event e) override;
-
-	
 };
 
 #endif _GAMESCREENMENU_H

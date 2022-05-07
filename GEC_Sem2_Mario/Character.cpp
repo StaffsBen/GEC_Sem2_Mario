@@ -32,12 +32,7 @@ Character::~Character() {
 
 void Character::Render() {
 
-	/*m_texture->Render(m_position, SDL_FLIP_NONE);
-
-	if (m_facing_direction == FACING_RIGHT)
-		m_texture->Render(m_position, SDL_FLIP_NONE);
-	else
-		m_texture->Render(m_position, SDL_FLIP_HORIZONTAL);*/
+	
 }
 
 void Character::Update(float deltaTime, SDL_Event e) {

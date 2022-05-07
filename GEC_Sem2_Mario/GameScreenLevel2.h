@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _GAMESCREENLEVEL1_H
-#define _GAMESCREENLEVEL1_H
+#ifndef _GAMESCREENLEVEL2_H
+#define _GAMESCREENLEVEL2_H
 
 #include "GameScreen.h"
 #include "Commons.h"
@@ -9,6 +9,7 @@
 #include "CharacterLuigi.h"
 #include "CharacterKoopa.h"
 #include "CharacterKoopaRed.h"
+#include "CharacterFireball.h"
 #include "CharacterCoin.h"
 #include "CharacterText.h"
 #include "LevelMap.h"
@@ -22,14 +23,13 @@ class Character;
 
 class PowBlock;
 
-class GameScreenLevel1 : GameScreen
+class GameScreenLevel2 : GameScreen
 {
 
 private:
 
 	//texture vars
 	Texture2D* m_background_texture;
-	Texture2D* m_background_colour;
 	std::string _spriteSheet = "Images/SpriteSheetDoubledTransparentSpacingFixWIPv5.png";
 
 	//player character vars
@@ -45,7 +45,7 @@ private:
 	CharacterKoopa* _charKoopaGreen;
 	float _newGreenKoopaTimer;
 
-	//shared koopa vars
+	//shared koopa var
 	bool _newKoopaTimerEnabled;
 
 	//red koopa vars
@@ -56,8 +56,12 @@ private:
 	float _newRedKoopaTimer, _redKoopaJumpTimer;
 	bool _redKoopaJumpChance;
 
-	CharacterKoopaRed* _charKoopaRed;
-
+	//fireball vars
+	void UpdateFireball(float _deltaTime, SDL_Event e);
+	void CreateFireball(std::string texturePath, Vector2D position, FACING direction, float speed);
+	std::vector<CharacterFireball*> m_fireBalls;
+	CharacterFireball* _charFireball;
+	
 	//coin vars and funcs
 	void CreateCoin(Vector2D position);
 	CharacterCoin* _charCoin;
@@ -96,8 +100,8 @@ private:
 
 public:
 
-	GameScreenLevel1(SDL_Renderer* renderer);
-	~GameScreenLevel1();
+	GameScreenLevel2(SDL_Renderer* renderer);
+	~GameScreenLevel2();
 
 	void Render() override;
 	void Update(float _deltaTime, SDL_Event e) override;
@@ -105,4 +109,4 @@ public:
 	void UpdatePowBlock();
 };
 
-#endif _GAMESCREENLEVEL1_H
+#endif _GAMESCREENLEVEL2_H
