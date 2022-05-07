@@ -23,7 +23,7 @@ private:
 
 	//texture var
 	Texture2D* m_background_texture;
-	std::string _spriteSheet = "Images/SpriteSheetDoubledTransparentSpacingFixWIPv4.png";
+	std::string _spriteSheet = "Images/SpriteSheetDoubledTransparentSpacingFixWIPv5.png";
 
 	//level funcs and var
 	bool SetUpLevel();
@@ -52,8 +52,6 @@ public:
 
 	void Render() override;
 	void Update(float _deltaTime, SDL_Event e) override;
-
-	
 };
 
 #endif _GAMESCREENMENU_H

@@ -15,12 +15,12 @@ class PowBlock
 {
 public:
 
-	PowBlock(SDL_Renderer* renderer, LevelMap* levelmap);
+	PowBlock(SDL_Renderer* renderer, LevelMap* levelmap, Vector2D position);
 	~PowBlock();
 
 	void Render();
-	Rect2D GetCollisionBox() { return Rect2D(m_position.x, m_position.y, m_texture->GetWidth(), m_texture->GetHeight()); }
-	void TakeHit();
+	Rect2D GetCollisionBox() { return Rect2D(m_position.x, m_position.y, m_texture->GetWidth() / 3, m_texture->GetHeight()); }
+	void TakeHit(int _levelNo);
 	bool IsAvailable() { return m_num_hits_left > 0; }
 
 private:

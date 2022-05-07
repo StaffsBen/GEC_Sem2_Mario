@@ -6,7 +6,7 @@ CharacterText::CharacterText(SDL_Renderer* renderer, std::string imagePath, Vect
 	m_single_sprite_w = m_texture->GetWidth() / TEXT_SPRITE_DIV_WIDTH;
 	m_single_sprite_h = (m_texture->GetHeight() / TEXT_SPRITE_DIV_HEIGHT);
 
-	//sets value of the drawn sprite modifier to 0, meaning it will draw the default sprite, in this case, the idle sprite
+	//sets default x and y sprite positions on the sprite sheet
 	_spriteXPos = 25;
 	_spriteYPos = 348;
 
@@ -38,6 +38,7 @@ void CharacterText::Update(float deltaTime, SDL_Event e) {
 
 void CharacterText::SymbolSelect(char symbol) {
 
+	//changes x position of the drawn portion of the sprite sheet, in order to draw specified character
 	switch (symbol) {
 
 	case '0':

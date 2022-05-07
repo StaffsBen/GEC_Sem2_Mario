@@ -1,5 +1,6 @@
 #include "GameScreen.h"
 #include "GameScreenLevel1.h"
+#include "GameScreenLevel2.h"
 #include "GameScreenMenu.h"
 #include "GameScreenManager.h"
 
@@ -40,18 +41,9 @@ void GameScreenManager::ChangeScreen(SCREENS new_screen) {
 
 	GameScreenMenu* _tempScreenMenu;
 	GameScreenLevel1* _tempScreenLv1;
+	GameScreenLevel2* _tempScreenLv2;
 
 	switch (new_screen) {
-
-	/*case SCREEN_INTRO:
-
-		_tempScreen = new GameScreenLevel1(m_renderer);
-
-		m_current_screen = (GameScreen*)_tempScreen;
-
-		_tempScreen = nullptr;
-
-		break; */
 
 	case SCREEN_MENU:
 
@@ -73,35 +65,15 @@ void GameScreenManager::ChangeScreen(SCREENS new_screen) {
 
 		break;
 
-	/*case SCREEN_LEVEL2:
+	case SCREEN_LEVEL2:
 
-		_tempScreen = new GameScreenLevel1(m_renderer);
+		_tempScreenLv2 = new GameScreenLevel2(m_renderer);
 
-		m_current_screen = (GameScreen*)_tempScreen;
+		m_current_screen = (GameScreen*)_tempScreenLv2;
 
-		_tempScreen = nullptr;
-
-		break;
-
-	case SCREEN_GAMEOVER:
-
-		_tempScreen = new GameScreenLevel1(m_renderer);
-
-		m_current_screen = (GameScreen*)_tempScreen;
-
-		_tempScreen = nullptr;
+		_tempScreenLv2 = nullptr;
 
 		break;
-
-	case SCREEN_HIGHSCORES:
-
-		_tempScreen = new GameScreenLevel1(m_renderer);
-
-		m_current_screen = (GameScreen*)_tempScreen;
-
-		_tempScreen = nullptr;
-
-		break;*/
 
 	default:
 
