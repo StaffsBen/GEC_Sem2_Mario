@@ -240,7 +240,7 @@ bool GameScreenLevel1::SetUpLevel() {
 	SetLevelMap();
 
 	//creates single instances of mario and luigi
-	CreateMarioBros(_spriteSheet, Vector2D(70, 245), Vector2D(410, 245));
+	CreateMarioBros(_spriteSheet, Vector2D(70, 225), Vector2D(410, 225));
 
 	//create an instance of the PowBlock
 	m_pow_block = new PowBlock(m_renderer, m_level_map, Vector2D((SCREEN_WIDTH * 0.5f) - 32 * 0.5f, 260));

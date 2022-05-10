@@ -248,7 +248,7 @@ bool GameScreenMenu::SetUpLevel() {
 
 	SetLevelMap();
 
-	_charMario = new CharacterMario(m_renderer, _spriteSheet, Vector2D(240, 275), m_level_map);
+	_charMario = new CharacterMario(m_renderer, _spriteSheet, Vector2D(240, 225), m_level_map);
 
 	CreateText(_spriteSheet, Vector2D(50, 300), 'l');
 	CreateText(_spriteSheet, Vector2D(65, 300), 'e');
