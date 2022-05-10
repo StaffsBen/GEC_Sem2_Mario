@@ -232,7 +232,7 @@ bool GameScreenLevel2::SetUpLevel() {
 	SetLevelMap();
 
 	//creates single instances of mario and luigi
-	CreateMarioBros(_spriteSheet, Vector2D(70, 245), Vector2D(410, 245));
+	CreateMarioBros(_spriteSheet, Vector2D(70, 225), Vector2D(410, 225));
 
 	//create an instance of the PowBlock
 	m_pow_block = new PowBlock(m_renderer, m_level_map, Vector2D((SCREEN_WIDTH * 0.5) - 10, SCREEN_HEIGHT * 0.4));
@@ -654,7 +654,7 @@ void GameScreenLevel2::UpdateFireball(float _deltaTime, SDL_Event e) {
 
 			std::cout << "Luigi dead!\n";
 			_charLuigi->SetAlive(false);
-			_charLuigi->SetPosition(Vector2D(5050.0f, 5000.0f));
+			_charLuigi->SetPosition(Vector2D(5050.0f, 6000.0f));
 			_charLuigi->DeathSFX();
 		}
 	}
